@@ -1,16 +1,45 @@
-import { Badge } from "@/components/ui/badge"
-const MOCKED_CATEGORIES = ['All', 'Succulents', 'For Beginners', 'Advanced', 'Shadow Lovers']
+"use client";
 
-const badgeUnselected = "h-auto rounded-2xl border-[#2c3a2e] bg-[#1e241e] px-4 py-1.5 text-sm text-[#94a296]"
-const badgeSelected = "h-auto rounded-2xl border-[#2c3a2e] bg-[#345A3E] px-4 py-1.5 text-sm text-[#A8DAB0]"
+import { useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+
+const badgeUnselected =
+  "rounded-2xl border-badge-border bg-badge text-badge-foreground";
+const badgeSelected =
+  "rounded-2xl border-badge-border bg-badge-active text-badge-active-foreground";
+
 export default function Home() {
+  const { data: categories, isLoading } = useQuery<string[]>({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:8080/categories");
+      return res.json();
+    },
+  });
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  console.log('selectedCategory', selectedCategory);
+
   return (
     <div className="p-10">
       <h1 className="text-6xl font-extrabold">Every Plant</h1>
-      <h1 className="text-6xl font-extrabold text-primary">needs a friend.</h1>
+      <h1 className="text-6xl font-extrabold text-primary">
+        needs a friend.
+      </h1>
       <div className="flex flex-wrap gap-2 mt-4">
-        {MOCKED_CATEGORIES.map((category) => (
-          <Badge key={category} variant="outline" className={category === 'All' ? badgeSelected : badgeUnselected}>{category}</Badge>
+        {isLoading && <p>Loading...</p>}
+        {categories?.map((category) => (
+          <Button
+            key={category}
+            variant={null}
+            size='lg'
+            className={
+              category === selectedCategory ? badgeSelected : badgeUnselected
+            }
+            onClick={() => setSelectedCategory(category)}
+          >
+            {category}
+          </Button>
         ))}
       </div>
     </div>

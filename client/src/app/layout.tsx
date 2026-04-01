@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import QueryProvider from "@/lib/query-provider";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -46,7 +47,7 @@ export default function RootLayout({
             </Link>
           </div>
         </div>
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
