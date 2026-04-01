@@ -5,6 +5,7 @@ public class Plant {
     private final String id;
     private final String name;
     private final String category;
+    private final String[] categories;
     private final String shortDescription;
     private final String description;
     private final String imageUrl;
@@ -12,10 +13,11 @@ public class Plant {
     private final SunlightRequirement sunlightRequirement;
     private final String similarPlant;
 
-    public Plant(String name, String category, String shortDescription, String description, String imageUrl, WateringDifficulty wateringDifficulty, SunlightRequirement sunlightRequirement, String similarPlant) {
+    public Plant(String name, String category, String[] categories, String shortDescription, String description, String imageUrl, WateringDifficulty wateringDifficulty, SunlightRequirement sunlightRequirement, String similarPlant) {
         this.id = java.util.UUID.randomUUID().toString();
         this.name = name;
         this.category = category;
+        this.categories = categories;
         this.shortDescription = shortDescription;
         this.description = description;
         this.imageUrl = imageUrl;
@@ -34,6 +36,10 @@ public class Plant {
 
     public String getCategory() {
         return category;
+    }
+
+    public String[] getCategories() {
+        return categories;
     }
 
     public String getShortDescription() {
