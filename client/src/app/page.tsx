@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
-import { PlantsGrid } from "./home/plantsGrid/plantsGrid";
+import { PlantsGrid } from "./home/plantsGrid/PlantsGrid";
 
 const badgeUnselected =
   "rounded-2xl border-badge-border bg-badge text-badge-foreground";
