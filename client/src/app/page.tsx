@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { PlantsGrid } from "./home/plantsGrid";
 
@@ -28,7 +29,13 @@ export default function Home() {
         needs a friend.
       </h1>
       <div className="flex flex-wrap gap-2 mt-4">
-        {isLoading && <p>Loading...</p>}
+        {isLoading && (
+          <>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-10 w-24 rounded-2xl" />
+            ))}
+          </>
+        )}
         {categories?.map((category) => (
           <Button
             key={category}

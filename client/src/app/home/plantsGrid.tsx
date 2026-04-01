@@ -4,12 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Plant } from "@/type";
 
-const difficultyConfig = {
-    EASY: { label: "Easy", bg: "bg-[#342c16]", text: "text-[#d4af58]" },
-    MEDIUM: { label: "Medium", bg: "bg-[#2c2448]", text: "text-[#b4a0dc]" },
-    HARD: { label: "Hard", bg: "bg-[#3a1616]", text: "text-[#dc6060]" },
+const wateringLabels = {
+    EASY: "💧 Easy",
+    MEDIUM: "💧 Medium",
+    HARD: "💧 Hard",
 } as const;
 
 const sunlightLabels = {
@@ -43,7 +44,7 @@ function FeaturedCard({ plant }: { plant: Plant }) {
                         <img
                             src={plant.imageUrl}
                             alt={plant.name}
-                            className="h-40 w-40 rounded-full object-cover"
+                            className="h-56 w-56 rounded-full object-cover"
                         />
                     </div>
 
@@ -55,10 +56,10 @@ function FeaturedCard({ plant }: { plant: Plant }) {
                             {plant.shortDescription}
                         </p>
 
-                        <div className="flex flex-wrap gap-2">
-                            <PlantTag>💧 {plant.wateringDifficulty === "EASY" ? "5 days" : plant.wateringDifficulty === "MEDIUM" ? "3 days" : "Daily"}</PlantTag>
+                        <div className="flex flex-wrap gap-3">
+                            <PlantTag>{wateringLabels[plant.wateringDifficulty]}</PlantTag>
                             <PlantTag>{sunlightLabels[plant.sunlightRequirement]}</PlantTag>
-                            <PlantTag>🌡️ 18-27°C</PlantTag>
+                            <PlantTag>🌱 {plant.similarPlant}</PlantTag>
                         </div>
 
                         <Button
@@ -75,8 +76,6 @@ function FeaturedCard({ plant }: { plant: Plant }) {
 }
 
 function SmallCard({ plant }: { plant: Plant }) {
-    const difficulty = difficultyConfig[plant.wateringDifficulty];
-
     return (
         <Link href={`/plants/${plant.id}`} className="h-full">
             <Card className="relative h-full min-h-[187px] min-w-[280px] shrink-0 rounded-[20px] border-0 bg-card p-0 shadow-[0px_8px_28px_-4px_rgba(0,0,0,0.2)]">
@@ -89,7 +88,7 @@ function SmallCard({ plant }: { plant: Plant }) {
                         <img
                             src={plant.imageUrl}
                             alt={plant.name}
-                            className="h-12 w-12 rounded-full object-cover"
+                            className="h-30 w-30 absolute right-3 top-3 rounded-full object-cover"
                         />
                     </div>
 
@@ -100,12 +99,10 @@ function SmallCard({ plant }: { plant: Plant }) {
                         </p>
                     </div>
 
-                    <div className="flex justify-end">
-                        <span
-                            className={`rounded-full px-2.5 py-1 text-[10px] font-medium ${difficulty.bg} ${difficulty.text}`}
-                        >
-                            {difficulty.label}
-                        </span>
+                    <div className="flex flex-wrap gap-3">
+                        <PlantTag>{wateringLabels[plant.wateringDifficulty]}</PlantTag>
+                        <PlantTag>{sunlightLabels[plant.sunlightRequirement]}</PlantTag>
+                        <PlantTag>🌱 {plant.similarPlant}</PlantTag>
                     </div>
                 </CardContent>
             </Card>
@@ -114,22 +111,20 @@ function SmallCard({ plant }: { plant: Plant }) {
 }
 
 function WideCard({ plant }: { plant: Plant }) {
-    const difficulty = difficultyConfig[plant.wateringDifficulty];
-
     return (
         <Link href={`/plants/${plant.id}`} className="flex self-stretch">
             <Card className="relative h-full min-h-[187px] min-w-[580px] shrink-0 rounded-[20px] border border-[#362e50] bg-[#1e1a32] p-0 shadow-[0px_8px_28px_-4px_rgba(0,0,0,0.2)]">
                 <div className="absolute right-[40px] top-[-31px] h-[200px] w-[300px] rounded-full bg-[#b4a0dc] opacity-12" />
+                <img
+                    src={plant.imageUrl}
+                    alt={plant.name}
+                    className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full object-cover"
+                />
                 <CardContent className="relative flex h-full flex-col justify-between p-3.5">
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start">
                         <span className="rounded-full bg-[#2c2448] px-2.5 py-1.5 text-[9px] font-medium uppercase tracking-wider text-[#b4a0dc]">
                             {plant.category ?? "FLOWERING"}
                         </span>
-                        <img
-                            src={plant.imageUrl}
-                            alt={plant.name}
-                            className="h-16 w-16 rounded-full object-cover"
-                        />
                     </div>
 
                     <div className="mt-auto space-y-1">
@@ -139,18 +134,10 @@ function WideCard({ plant }: { plant: Plant }) {
                         </p>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                        <Button
-                            variant={null}
-                            className="h-[34px] rounded-full bg-[#302856] px-5 text-xs font-medium text-[#b4a0dc] hover:bg-[#3a3068]"
-                        >
-                            Adopt me
-                        </Button>
-                        <span
-                            className={`rounded-full px-2.5 py-1.5 text-[10px] font-medium ${difficulty.bg} ${difficulty.text}`}
-                        >
-                            {difficulty.label}
-                        </span>
+                    <div className="flex flex-wrap gap-3">
+                        <PlantTag>{wateringLabels[plant.wateringDifficulty]}</PlantTag>
+                        <PlantTag>{sunlightLabels[plant.sunlightRequirement]}</PlantTag>
+                        <PlantTag>🌱 {plant.similarPlant}</PlantTag>
                     </div>
                 </CardContent>
             </Card>
@@ -185,7 +172,17 @@ export const PlantsGrid = () => {
     });
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="mt-8 flex flex-row gap-4 items-stretch">
+                <Skeleton className="min-h-[390px] min-w-[440px] shrink-0 rounded-3xl" />
+                <div className="flex flex-col gap-4">
+                    <Skeleton className="min-h-[187px] min-w-[280px] shrink-0 rounded-[20px]" />
+                    <Skeleton className="min-h-[187px] min-w-[280px] shrink-0 rounded-[20px]" />
+                </div>
+                <Skeleton className="min-h-[187px] min-w-[580px] shrink-0 rounded-[20px]" />
+                <Skeleton className="min-h-[187px] min-w-[280px] shrink-0 rounded-[20px]" />
+            </div>
+        );
     }
 
     if (!plants || plants.length === 0) {
