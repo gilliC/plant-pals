@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
-import { PlantsGrid } from "./home/plantsGrid";
+import { PlantsGrid } from "./home/plantsGrid/plantsGrid";
 
 const badgeUnselected =
   "rounded-2xl border-badge-border bg-badge text-badge-foreground";
@@ -20,12 +20,11 @@ export default function Home() {
     },
   });
   const [selectedCategory, setSelectedCategory] = useState("All");
-  console.log('selectedCategory', selectedCategory);
 
   return (
     <div className="p-10">
       <h1 className="text-6xl font-extrabold">Every Plant</h1>
-      <h1 className="text-6xl font-extrabold text-primary">
+      <h1 className="text-6xl font-extrabold text-primary mt-2">
         needs a friend.
       </h1>
       <div className="flex flex-wrap gap-2 mt-4">
