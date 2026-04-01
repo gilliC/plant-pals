@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { PlantsGrid } from "./home/plantsGrid";
 
 const badgeUnselected =
   "rounded-2xl border-badge-border bg-badge text-badge-foreground";
@@ -42,6 +43,7 @@ export default function Home() {
           </Button>
         ))}
       </div>
+      <PlantsGrid />
     </div>
   );
 }
