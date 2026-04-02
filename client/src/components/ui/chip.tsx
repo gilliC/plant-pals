@@ -13,7 +13,6 @@ interface ChipProps {
 }
 export const Chip = ({ text, variant }: ChipProps) => {
     const color = variantsColor[variant];
-    console.log("Rendering Chip with variant:", variant, "and color:", color);
     return <Badge className="border-1 bg-primary-dark p-4  gap-2" style={{
         borderColor: color,
         color: color,

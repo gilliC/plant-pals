@@ -7,7 +7,7 @@ import { Chip } from "./ui/chip";
 import { Button } from "./ui/button";
 
 export function Navbar() {
-  const { user, logout } = useUser();
+  const { user, logout, isAdmin } = useUser();
 
   return (
     <div className="p-6 flex items-center justify-between border-b border-border">
@@ -19,6 +19,11 @@ export function Navbar() {
         <Link href="/myRequests" className="px-4 py-2">
           <p className="text-primary">My Requests</p>
         </Link>
+        {isAdmin && (
+          <Link href="/admin" className="px-4 py-2">
+            <p className="text-primary">Admin</p>
+          </Link>
+        )}
       </div>
 
       <div className="flex items-center rounded-lg">

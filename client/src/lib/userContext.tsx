@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 export interface User {
   id: number;
@@ -10,21 +10,44 @@ export interface User {
 
 interface UserContextValue {
   user: User | null;
+  isAdmin: boolean;
   setUser: (user: User | null) => void;
   logout: () => void;
 }
 
 const UserContext = createContext<UserContextValue | null>(null);
 
+const STORAGE_KEY = "plant-pals-user";
+
+function loadUser(): User | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : null;
+  } catch {
+    return null;
+  }
+}
+
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(loadUser);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  }, [user]);
 
   function logout() {
     setUser(null);
   }
 
+  const isAdmin = user?.role === "ADMIN";
+
   return (
-    <UserContext value={{ user, setUser, logout }}>
+    <UserContext value={{ user, setUser, logout, isAdmin }}>
       {children}
     </UserContext>
   );
