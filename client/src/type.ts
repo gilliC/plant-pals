@@ -2,6 +2,7 @@ export interface Plant {
     id: number;
     name: string;
     category: string;
+    categories: string[];
     shortDescription: string;
     description: string;
     imageUrl: string;
