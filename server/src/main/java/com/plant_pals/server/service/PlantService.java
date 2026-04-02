@@ -1,5 +1,7 @@
 package com.plant_pals.server.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 
 import com.plant_pals.server.entity.Plant;
@@ -14,6 +16,7 @@ public class PlantService {
     private final PlantRepository plantRepository;
 
     public Plant createPlant(Plant plant) {
+        plant.setUpdatedAt(LocalDateTime.now());
         return plantRepository.save(plant);
     }
 
