@@ -36,7 +36,7 @@ export default function RootLayout({
             <Link href="/" className="px-4 py-2">
               <p className="text-primary">Browse</p>
             </Link>
-            <Link href="/my-requests" className="px-4 py-2">
+            <Link href="/myRequests" className="px-4 py-2">
               <p className="text-primary">My Requests</p>
             </Link>
           </div>
