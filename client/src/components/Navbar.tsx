@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { LoginModal } from "./loginModal/LoginModal";
-import { useUser } from "@/lib/user-context";
+import { useUser } from "@/lib/userContext";
 import { Chip } from "./ui/chip";
 import { Button } from "./ui/button";
 

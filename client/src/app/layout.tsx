@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import QueryProvider from "@/lib/query-provider";
-import { UserProvider } from "@/lib/user-context";
+import QueryProvider from "@/lib/queryProvider";
+import { UserProvider } from "@/lib/userContext";
 import { Navbar } from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 

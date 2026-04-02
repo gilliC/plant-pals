@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { getApiPath } from "../../lib/utils";
-import { useUser, type User } from "../../lib/user-context";
+import { useUser, type User } from "../../lib/userContext";
 
 interface AuthPayload {
   name: string;
