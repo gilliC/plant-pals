@@ -1,6 +1,7 @@
 package com.plant_pals.server.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +23,23 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody AuthRequest request) {
-        return userService.createUser(request.getName(), request.getPassword());
+    public ResponseEntity<?> createUser(@RequestBody AuthRequest request) {
+        try {
+            User user = userService.createUser(request.getName(), request.getPassword());
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody AuthRequest request) {
-        return userService.login(request.getName(), request.getPassword());
+    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+        try {
+            User user = userService.login(request.getName(), request.getPassword());
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 
 }

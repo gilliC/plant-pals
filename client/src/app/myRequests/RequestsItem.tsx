@@ -1,23 +1,23 @@
 import Image from "next/image";
-import { Badge } from "../../components/ui/badge";
 import { Card, CardContent } from "../../components/ui/card";
+import { Chip } from "../../components/ui/chip";
 
 const configs = {
     approved: {
         cardBorder: "var(--primary)",
-        badgeColor: "var(--primary)",
+        variant: 'success',
         text: "Your request was approved! Contact Gilli to arrange pickup.",
         status: 'Approved',
     },
     rejected: {
         cardBorder: "var(--error)",
-        badgeColor: "var(--error)",
+        variant: 'error',
         text: "Someone else adopted this plant. Try subscribing to get notified next time!",
         status: 'Not available',
     },
     pending: {
         cardBorder: "var(--warning)",
-        badgeColor: "var(--warning)",
+        variant: 'warning',
         text: "Your request is being reviewed. We'll notify you soon.",
         status: 'Pending',
     }
@@ -38,13 +38,14 @@ export const RequestItem = ({ request }: any) => {
                 </div>
                 <div className="flex flex-col gap-1 items-start flex-1">
                     <p className="text-sm text-muted">{request.updatedAt}</p>
-                    <Badge className="border-1 bg-primary-dark p-4  gap-2" style={{
+                    <Chip text={config.status} variant={config.variant} />
+                    {/* <Badge className="border-1 bg-primary-dark p-4  gap-2" style={{
                         borderColor: config.badgeColor,
                         color: config.badgeColor,
                     }}>
                         <div className="h-2 w-2 rounded-full" style={{ backgroundColor: config.badgeColor }} />
                         {config.status}
-                    </Badge>
+                    </Badge> */}
                 </div>
             </CardContent>
         </Card>

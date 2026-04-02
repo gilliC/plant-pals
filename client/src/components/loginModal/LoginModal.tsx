@@ -16,17 +16,30 @@ export function LoginModal({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const { login, register } = useAuth(() => setOpen(false));
 
+  function handleOpenChange(isOpen: boolean) {
+    setOpen(isOpen);
+    if (!isOpen) {
+      login.reset();
+      register.reset();
+    }
+  }
+
+  function handleTabChange() {
+    login.reset();
+    register.reset();
+  }
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger render={<button className="px-4 py-2 cursor-pointer" />}>
         {children}
       </DialogTrigger>
 
       <DialogContent
-        className="w-[460px] max-w-[460px] gap-0 rounded-[28px] border-primary-darker bg-card p-0 shadow-[0px_8px_32px_-4px_rgba(0,0,0,0.5)]"
+        className="w-[460px] max-w-[460px] gap-0 overflow-hidden rounded-[28px] border-primary-darker bg-card p-0 shadow-[0px_8px_32px_-4px_rgba(0,0,0,0.5)]"
         showCloseButton={false}
       >
-        <div className="h-[4px] w-full rounded-t-[28px] bg-primary" />
+        <div className="h-[4px] w-full bg-primary" />
 
         <DialogHeader className="px-8 pt-7 pb-4">
           <DialogTitle className="text-[22px] font-bold text-foreground">
@@ -37,7 +50,7 @@ export function LoginModal({ children }: { children: React.ReactNode }) {
         <div className="mx-8 h-px bg-primary-darker" />
 
         <div className="px-8 pt-4 pb-8">
-          <Tabs defaultValue="sign-in">
+          <Tabs defaultValue="sign-in" onValueChange={handleTabChange}>
             <TabsList variant="line" className="w-full">
               <TabsTrigger value="sign-in">Sign In</TabsTrigger>
               <TabsTrigger value="register">Register</TabsTrigger>

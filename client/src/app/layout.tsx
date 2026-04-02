@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import QueryProvider from "@/lib/query-provider";
+import { UserProvider } from "@/lib/user-context";
 import { Navbar } from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -32,8 +33,10 @@ export default function RootLayout({
     <html lang="en" className={cn(geistSans.variable, geistMono.variable, "font-sans", inter.variable, "dark")} >
       <body>
         <QueryProvider>
-          <Navbar />
-          {children}
+          <UserProvider>
+            <Navbar />
+            {children}
+          </UserProvider>
         </QueryProvider>
         <Toaster />
       </body>

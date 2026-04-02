@@ -16,6 +16,10 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User createUser(String name, String password) {
+        User isExists = userRepository.findByName(name).orElse(null);
+        if (isExists != null) {
+            throw new RuntimeException("Name is already taken");
+        }
         User user = new User();
         user.setName(name);
         user.setRole(Role.USER);

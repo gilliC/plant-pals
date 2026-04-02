@@ -2,8 +2,13 @@
 
 import Link from "next/link";
 import { LoginModal } from "./loginModal/LoginModal";
+import { useUser } from "@/lib/user-context";
+import { Chip } from "./ui/chip";
+import { Button } from "./ui/button";
 
 export function Navbar() {
+  const { user, logout } = useUser();
+
   return (
     <div className="p-6 flex items-center justify-between border-b border-border">
       <h1 className="text-primary">🌱 Plant Pals</h1>
@@ -16,10 +21,22 @@ export function Navbar() {
         </Link>
       </div>
 
-      <div className="bg-primary-dark flex items-center rounded-lg">
-        <LoginModal>
-          <p className="text-primary">Sign In</p>
-        </LoginModal>
+      <div className="flex items-center rounded-lg">
+        {user ? (
+          <div className="flex items-center gap-4">
+            <Chip text={`${user.name} 🌻`} variant="success" />
+            <Button
+              onClick={logout}
+              variant='destructive'
+            >
+              Log Out
+            </Button>
+          </div>
+        ) : (
+          <LoginModal>
+            <p className="text-primary">Sign In</p>
+          </LoginModal>
+        )}
       </div>
     </div>
   );
