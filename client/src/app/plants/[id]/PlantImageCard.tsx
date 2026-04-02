@@ -24,7 +24,7 @@ export const PlantImageCard = ({ plant }: { plant: Plant }) => (
             width={448}
             height={448}
         />
-        <span className={classNames.newBadge}>&#10022; New</span>
+        <span className={classNames.newBadge}>✦ New</span>
         <span className={classNames.availableText}>
             <span className={classNames.availableDot} />
             Available

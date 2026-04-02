@@ -65,7 +65,7 @@ const Stars = ({ count }: { count: number }) => (
                 key={i}
                 className={`text-[20px] ${i < count ? "text-[#a8dab0]" : "text-[#505c52]"}`}
             >
-                {i < count ? "\u2605" : "\u2606"}
+                {i < count ? "★" : "☆"}
             </span>
         ))}
     </div>
@@ -79,7 +79,7 @@ export const CareCards = ({ plant }: { plant: Plant }) => {
     return (
         <div className={classNames.grid}>
             <div className={classNames.card}>
-                <span className={classNames.emoji}>&#128167;</span>
+                <span className={classNames.emoji}>💧</span>
                 <p className={classNames.label}>WATERING</p>
                 <WateringBar level={watering.level} />
                 <p className={classNames.value}>{watering.label}</p>
@@ -88,7 +88,7 @@ export const CareCards = ({ plant }: { plant: Plant }) => {
             </div>
 
             <div className={classNames.card}>
-                <span className={classNames.emoji}>&#9728;&#65039;</span>
+                <span className={classNames.emoji}>☀️</span>
                 <p className={classNames.label}>SUNLIGHT</p>
                 <SunlightDots level={sunlight.level} />
                 <p className={classNames.value}>{sunlight.label}</p>
@@ -97,7 +97,7 @@ export const CareCards = ({ plant }: { plant: Plant }) => {
             </div>
 
             <div className={classNames.card}>
-                <span className={classNames.emoji}>&#127793;</span>
+                <span className={classNames.emoji}>🌱</span>
                 <p className={classNames.label}>LEVEL</p>
                 <Stars count={difficulty.stars} />
                 <p className={classNames.value}>{difficulty.label}</p>
@@ -106,14 +106,14 @@ export const CareCards = ({ plant }: { plant: Plant }) => {
             </div>
 
             <div className={classNames.similarCard}>
-                <span className={classNames.emoji}>&#127807;</span>
+                <span className={classNames.emoji}>🌿</span>
                 <p className={classNames.similarLabel}>SIMILAR TO</p>
                 <div className={classNames.similarDivider} />
                 <p className={classNames.similarText}>
                     {plant.similarPlant} needs similar growing conditions
                 </p>
                 <span className={classNames.similarBadge}>
-                    &#127807; {plant.similarPlant}
+                    🌿 {plant.similarPlant}
                 </span>
                 <div className={classNames.similarAccent} />
             </div>

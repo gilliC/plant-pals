@@ -14,13 +14,13 @@ const classNames = {
 export const AdoptCard = () => (
     <div className={classNames.card}>
         <div className={classNames.circle} />
-        <p className={classNames.title}>Ready to adopt? &#127793;</p>
+        <p className={classNames.title}>Ready to adopt? 🌱</p>
         <p className={classNames.subtitle}>
             Send a request and we'll be in touch!
         </p>
         <div className={classNames.buttonRow}>
             <button className={classNames.adoptButton}>I want to adopt!</button>
-            <button className={classNames.notifyButton}>&#128276;</button>
+            <button className={classNames.notifyButton}>🔔</button>
             <span className={classNames.notifyLabel}>Notify me</span>
         </div>
     </div>

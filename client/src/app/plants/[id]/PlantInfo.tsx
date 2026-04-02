@@ -33,7 +33,7 @@ export const PlantInfo = ({ plant }: { plant: Plant }) => (
             {
                 // TODO: this is just a placeholder until we have real data for this
             }
-            &#128587; 3 people have requested this plant
+            🙋 3 people have requested this plant
         </p>
     </>
 );

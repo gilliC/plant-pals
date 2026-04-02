@@ -59,6 +59,122 @@
             "wateringDifficulty": "EASY",
             "sunlightRequirement": "LOW",
             "similarPlant": "Fiddle Leaf Fig"
+        },
+        {
+            "id": 5,
+            "name": "Monstera Deliciosa",
+            "category": "For Beginners",
+            "categories": [
+                "For Beginners",
+                "Shadow Lovers"
+            ],
+            "shortDescription": "A tropical plant famous for its large, split leaves.",
+            "description": "The Monstera deliciosa, also known as the Swiss Cheese Plant, is a tropical plant native to Central America. It is beloved for its dramatic, fenestrated leaves that develop holes as the plant matures. Monstera thrives in bright, indirect light and enjoys regular watering with well-draining soil.",
+            "imageUrl": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wateringDifficulty": "MEDIUM",
+            "sunlightRequirement": "MEDIUM",
+            "similarPlant": "Philodendron"
+        },
+        {
+            "id": 6,
+            "name": "Pothos",
+            "category": "For Beginners",
+            "categories": [
+                "For Beginners",
+                "Shadow Lovers"
+            ],
+            "shortDescription": "A trailing vine known for its heart-shaped leaves.",
+            "description": "Pothos (Epipremnum aureum), also called Devil's Ivy, is one of the easiest houseplants to grow. It features heart-shaped leaves on cascading vines and can thrive in a wide range of light conditions. Pothos is excellent for beginners and is known for its air-purifying qualities.",
+            "imageUrl": "https://images.unsplash.com/photo-1637967886160-fd78dc3ce3f5?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wateringDifficulty": "EASY",
+            "sunlightRequirement": "LOW",
+            "similarPlant": "Philodendron"
+        },
+        {
+            "id": 7,
+            "name": "Rubber Plant",
+            "category": "For Beginners",
+            "categories": [
+                "For Beginners"
+            ],
+            "shortDescription": "A striking plant with thick, glossy, dark green leaves.",
+            "description": "The Rubber Plant (Ficus elastica) is a popular houseplant known for its bold, glossy leaves that range from dark green to burgundy. Native to Southeast Asia, it can grow into a tall, tree-like specimen indoors. Rubber plants prefer bright, indirect light and moderate watering.",
+            "imageUrl": "https://images.unsplash.com/photo-1609170981724-96aborede7fa?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wateringDifficulty": "MEDIUM",
+            "sunlightRequirement": "MEDIUM",
+            "similarPlant": "Fiddle Leaf Fig"
+        },
+        {
+            "id": 8,
+            "name": "Philodendron",
+            "category": "For Beginners",
+            "categories": [
+                "For Beginners",
+                "Shadow Lovers"
+            ],
+            "shortDescription": "A diverse genus of tropical plants with lush foliage.",
+            "description": "Philodendrons are a large genus of tropical plants prized for their lush, varied foliage. They come in climbing and non-climbing varieties, with leaves ranging from heart-shaped to deeply lobed. Philodendrons are low-maintenance, tolerate low light, and make excellent houseplants for any skill level.",
+            "imageUrl": "https://images.unsplash.com/photo-1632207691143-643a2a9a1183?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wateringDifficulty": "EASY",
+            "sunlightRequirement": "LOW",
+            "similarPlant": "Monstera Deliciosa"
+        },
+        {
+            "id": 9,
+            "name": "String of Pearls",
+            "category": "Succulent",
+            "categories": [
+                "Succulents"
+            ],
+            "shortDescription": "A trailing succulent with bead-like spherical leaves.",
+            "description": "String of Pearls (Senecio rowleyanus) is a unique trailing succulent with small, spherical leaves that resemble a strand of beads. Native to southwestern Africa, it looks stunning in hanging baskets. It prefers bright, indirect light and infrequent watering, as its pearl-shaped leaves store water efficiently.",
+            "imageUrl": "https://images.unsplash.com/photo-1597055181300-e3633a917788?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wateringDifficulty": "HARD",
+            "sunlightRequirement": "HIGH",
+            "similarPlant": "Aloe Vera"
+        },
+        {
+            "id": 10,
+            "name": "English Ivy",
+            "category": "Shadow Lovers",
+            "categories": [
+                "Shadow Lovers"
+            ],
+            "shortDescription": "A classic trailing vine with elegant lobed leaves.",
+            "description": "English Ivy (Hedera helix) is a versatile, fast-growing vine with distinctive lobed leaves. It works beautifully as a trailing plant in hanging baskets or trained up a trellis. English Ivy prefers cooler temperatures and moderate to bright indirect light, and appreciates consistent moisture.",
+            "imageUrl": "https://images.unsplash.com/photo-1624712775944-950e4e752895?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wateringDifficulty": "MEDIUM",
+            "sunlightRequirement": "MEDIUM",
+            "similarPlant": "Pothos"
+        },
+        {
+            "id": 11,
+            "name": "Orchid",
+            "category": "Flowering",
+            "categories": [
+                "Flowering"
+            ],
+            "shortDescription": "An elegant flowering plant with delicate, long-lasting blooms.",
+            "description": "Orchids (Phalaenopsis) are elegant flowering plants known for their stunning, long-lasting blooms that can persist for months. They are one of the most popular houseplants worldwide. Orchids prefer bright, indirect light, weekly watering, and high humidity. Despite their exotic appearance, they are surprisingly adaptable to indoor conditions.",
+            "imageUrl": "https://images.unsplash.com/photo-1610397648930-477b8c7f0943?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wateringDifficulty": "HARD",
+            "sunlightRequirement": "MEDIUM",
+            "similarPlant": "Snake Plant"
+        },
+        {
+            "id": 12,
+            "name": "Dracaena",
+            "category": "For Beginners",
+            "categories": [
+                "For Beginners",
+                "Shadow Lovers"
+            ],
+            "shortDescription": "A tall, architectural plant with sword-like leaves.",
+            "description": "Dracaena is a genus of sturdy, tree-like plants with long, sword-shaped leaves often striped with green, yellow, or red. Native to Africa, they are popular for adding a vertical element to indoor spaces. Dracaenas are low-maintenance, tolerate low light, and only need watering when the soil dries out.",
+            "imageUrl": "https://images.unsplash.com/photo-1525498128493-380d1990a112?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "wateringDifficulty": "EASY",
+            "sunlightRequirement": "LOW",
+            "similarPlant": "Snake Plant"
         }
     ]
 }
