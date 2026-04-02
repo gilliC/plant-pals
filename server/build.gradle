@@ -25,7 +25,7 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	implementation 'org.springframework.security:spring-security-crypto'
+	implementation 'at.favre.lib:bcrypt:0.10.2'
 
 }
 
