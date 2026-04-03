@@ -1,6 +1,6 @@
 'use client';
 import { useUser } from "../../lib/userContext";
-import { AddPlant } from "./AddPlant";
+import { AddPlant } from "./AddPlant/AddPlant";
 import { DashboardCard } from "./DashboardCard";
 
 const stats = [
