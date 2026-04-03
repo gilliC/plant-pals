@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Plant } from "@/type";
+import { Plant } from "@/lib/type";
 import Image from "next/image";
 import Link from "next/link";
 import { TagsRow } from "./TagsRow";

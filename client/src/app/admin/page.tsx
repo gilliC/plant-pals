@@ -1,6 +1,6 @@
 'use client';
-import { Button } from "@base-ui/react";
 import { useUser } from "../../lib/userContext";
+import { AddPlant } from "./AddPlant";
 import { DashboardCard } from "./DashboardCard";
 
 const stats = [
@@ -14,7 +14,6 @@ const classes = {
     h1: "text-4xl font-bold mb-4",
     h6: "text-primary-foreground",
     grid: "grid grid-cols-1 lg:grid-cols-5 gap-4 mt-4 items-center",
-    button: "col-span-1 border-primary border-1 text-white hover:bg-primary-dark bg-card rounded-full w-20 h-10"
 }
 
 const Admin = () => {
@@ -35,9 +34,7 @@ const Admin = () => {
                 {stats.map((stat) => (
                     <DashboardCard key={stat.title} title={stat.title} value={stat.value} variant={stat.variant as any} />
                 ))}
-                <Button className={classes.button}>
-                    + Add
-                </Button>
+                <AddPlant />
             </div>
         </div>
     );

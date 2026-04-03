@@ -30,7 +30,12 @@ function loadUser(): User | null {
 }
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(loadUser);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const stored = loadUser();
+    if (stored) setUser(stored);
+  }, []);
 
   useEffect(() => {
     if (user) {

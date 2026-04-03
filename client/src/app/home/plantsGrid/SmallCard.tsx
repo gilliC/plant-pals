@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Plant } from "@/type";
+import { Plant } from "@/lib/type";
 import Link from "next/link";
 import { TagsRow } from "./TagsRow";
 import Image from "next/image";

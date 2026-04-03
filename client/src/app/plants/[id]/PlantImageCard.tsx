@@ -1,6 +1,6 @@
 "use client";
 
-import { Plant } from "@/type";
+import { Plant } from "@/lib/type";
 import Image from "next/image";
 
 const classNames = {

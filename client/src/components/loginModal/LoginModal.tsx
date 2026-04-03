@@ -12,11 +12,11 @@ import { AuthForm } from "./AuthForm";
 import { useAuth } from "./useAuth";
 import { useState } from "react";
 
-export function LoginModal({ children }: { children: React.ReactNode }) {
+export const LoginModal = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
   const { login, register } = useAuth(() => setOpen(false));
 
-  function handleOpenChange(isOpen: boolean) {
+  const handleOpenChange = (isOpen: boolean) => {
     setOpen(isOpen);
     if (!isOpen) {
       login.reset();
@@ -24,7 +24,7 @@ export function LoginModal({ children }: { children: React.ReactNode }) {
     }
   }
 
-  function handleTabChange() {
+  const handleTabChange = () => {
     login.reset();
     register.reset();
   }

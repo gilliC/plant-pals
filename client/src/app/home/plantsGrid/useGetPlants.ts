@@ -1,6 +1,6 @@
 "use client";
 
-import { Plant } from "@/type";
+import { Plant } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
 import { getApiPath } from "../../../lib/utils";
 

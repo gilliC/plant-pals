@@ -1,6 +1,6 @@
 "use client";
 
-import { Plant } from "@/type";
+import { Plant } from "@/lib/type";
 
 const wateringLabels = {
     EASY: { label: "Low", detail: "Water infrequently", level: 1 },
