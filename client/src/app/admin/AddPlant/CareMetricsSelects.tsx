@@ -49,7 +49,7 @@ export const CareMetricsSelects = ({ form }: CareMetricsSelectsProps) => {
                     </SelectGroup>
                 </SelectContent>
             </Select>
-            <Select onValueChange={(value) => form.setValue("sunlightRequirement", value as string)}>
+            <Select onValueChange={(value) => form.setValue("sunlight", value as string)}>
                 <SelectTrigger className={classes.trigger}>
                     <SelectValue placeholder="Sunlight ☀️">
                         {(value: string | null) => sunlightOptions.find((o) => o.value === value)?.label ?? "Sunlight ☀️"}

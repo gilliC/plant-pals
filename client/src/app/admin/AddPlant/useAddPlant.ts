@@ -14,11 +14,11 @@ const addPlant = async (data: AddPlantFormValues) => {
         category: { name: data.category },
         shortDescription: data.shortDescription,
         description: data.description,
-        photoUrl: data.imageUrl,
+        photoUrl: data.photoUrl,
         wateringDifficulty: data.wateringDifficulty,
-        sunlight: data.sunlightRequirement,
+        sunlight: data.sunlight,
         difficulty: data.difficulty,
-        similarTo: data.similarPlant,
+        similarTo: data.similarTo,
     };
 
     const res = await fetch(plantsPath, {
@@ -43,10 +43,10 @@ export const useAddPlant = (onSuccess: () => void) => {
             shortDescription: "",
             description: "",
             wateringDifficulty: undefined,
-            sunlightRequirement: undefined,
+            sunlight: undefined,
             difficulty: "",
-            similarPlant: "",
-            imageUrl: "",
+            similarTo: "",
+            photoUrl: "",
         },
     });
 

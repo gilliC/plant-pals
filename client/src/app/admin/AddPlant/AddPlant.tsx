@@ -38,8 +38,8 @@ const fields: FormField[] = [
 ];
 
 const fieldsAfterCare: FormField[] = [
-    { label: "Similar Plant", field: "similarPlant", placeholder: "e.g. Fiddle Leaf Fig, Snake Plant, etc." },
-    { label: "Image URL", field: "imageUrl", placeholder: "A URL to an image of the plant" },
+    { label: "Similar Plant", field: "similarTo", placeholder: "e.g. Fiddle Leaf Fig, Snake Plant, etc." },
+    { label: "Image URL", field: "photoUrl", placeholder: "A URL to an image of the plant" },
 ];
 
 export const AddPlant = () => {

@@ -3,21 +3,22 @@
 import { Plant } from "@/lib/type";
 
 const wateringLabels = {
-    EASY: { label: "Low", detail: "Water infrequently", level: 1 },
+    LOW: { label: "Low", detail: "Water infrequently", level: 1 },
     MEDIUM: { label: "Moderate", detail: "Every 5 days or so", level: 3 },
-    HARD: { label: "Frequent", detail: "Needs regular watering", level: 5 },
+    HIGH: { label: "Frequent", detail: "Needs regular watering", level: 5 },
 } as const;
 
 const sunlightLabels = {
-    LOW: { label: "Low light", detail: "Tolerates shade", level: 1 },
-    MEDIUM: { label: "Indirect", detail: "Avoid direct sunlight", level: 2 },
-    HIGH: { label: "Bright", detail: "Needs lots of light", level: 3 },
+    FULL: { label: "Full sun", detail: "Needs direct sunlight", level: 4 },
+    PARTIAL: { label: "Partial sun", detail: "Some direct sunlight", level: 3 },
+    INDIRECT: { label: "Indirect", detail: "Avoid direct sunlight", level: 2 },
+    SHADE: { label: "Shade", detail: "Tolerates low light", level: 1 },
 } as const;
 
 const difficultyLabels = {
-    EASY: { label: "Beginner", detail: "Very easy to grow", stars: 1 },
-    MEDIUM: { label: "Intermediate", detail: "Some experience needed", stars: 2 },
-    HARD: { label: "Advanced", detail: "Requires careful attention", stars: 3 },
+    BEGINNER: { label: "Beginner", detail: "Very easy to grow", stars: 1 },
+    INTERMEDIATE: { label: "Intermediate", detail: "Some experience needed", stars: 2 },
+    ADVANCED: { label: "Advanced", detail: "Requires careful attention", stars: 3 },
 } as const;
 
 const classNames = {
@@ -73,8 +74,8 @@ const Stars = ({ count }: { count: number }) => (
 
 export const CareCards = ({ plant }: { plant: Plant }) => {
     const watering = wateringLabels[plant.wateringDifficulty];
-    const sunlight = sunlightLabels[plant.sunlightRequirement];
-    const difficulty = difficultyLabels[plant.wateringDifficulty];
+    const sunlight = sunlightLabels[plant.sunlight as keyof typeof sunlightLabels];
+    const difficulty = difficultyLabels[plant.difficulty as keyof typeof difficultyLabels];
 
     return (
         <div className={classNames.grid}>
@@ -110,10 +111,10 @@ export const CareCards = ({ plant }: { plant: Plant }) => {
                 <p className={classNames.similarLabel}>SIMILAR TO</p>
                 <div className={classNames.similarDivider} />
                 <p className={classNames.similarText}>
-                    {plant.similarPlant} needs similar growing conditions
+                    {plant.similarTo} needs similar growing conditions
                 </p>
                 <span className={classNames.similarBadge}>
-                    🌿 {plant.similarPlant}
+                    🌿 {plant.similarTo}
                 </span>
                 <div className={classNames.similarAccent} />
             </div>

@@ -1,13 +1,20 @@
-export enum WateringDifficulty {
-    EASY = "EASY",
-    MEDIUM = "MEDIUM",
-    HARD = "HARD",
-}
-
-export enum SunlightRequirement {
+export enum WateringLevel {
     LOW = "LOW",
     MEDIUM = "MEDIUM",
     HIGH = "HIGH",
+}
+
+export enum Sunlight {
+    FULL = "FULL",
+    PARTIAL = "PARTIAL",
+    INDIRECT = "INDIRECT",
+    SHADE = "SHADE",
+}
+
+export enum Difficulty {
+    BEGINNER = "BEGINNER",
+    INTERMEDIATE = "INTERMEDIATE",
+    ADVANCED = "ADVANCED",
 }
 
 export interface Category {
@@ -24,26 +31,28 @@ export interface Plant {
     categories: string[];
     shortDescription: string;
     description: string;
-    imageUrl: string;
-    wateringDifficulty: WateringDifficulty;
-    sunlightRequirement: SunlightRequirement;
-    similarPlant: string;
+    photoUrl: string;
+    wateringDifficulty: WateringLevel;
+    sunlight: Sunlight;
+    difficulty: Difficulty;
+    similarTo: string;
 }
 
 export const difficultyLabels = {
-    EASY: "Beginner",
-    MEDIUM: "Intermediate",
-    HARD: "Advanced",
+    BEGINNER: "Beginner",
+    INTERMEDIATE: "Intermediate",
+    ADVANCED: "Advanced",
 } as const;
 
 export const sunlightLabels = {
-    LOW: "Low Light",
-    MEDIUM: "Medium Light",
-    HIGH: "Bright Light",
+    FULL: "Full Sun",
+    PARTIAL: "Partial Sun",
+    INDIRECT: "Indirect Light",
+    SHADE: "Shade",
 } as const;
 
 export const wateringDifficultyLabels = {
-    EASY: "Low",
+    LOW: "Low",
     MEDIUM: "Moderate",
-    HARD: "Frequent",
+    HIGH: "Frequent",
 } as const;

@@ -13,6 +13,7 @@ import com.plant_pals.server.dto.UpdateRequestParams;
 import com.plant_pals.server.entity.Request;
 import com.plant_pals.server.service.RequestService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,7 +25,7 @@ public class RequestController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> createRequest(@RequestBody CreateRequestParams request) {
+    public ResponseEntity<?> createRequest(@Valid @RequestBody CreateRequestParams request) {
         try {
             Request newRequest = requestService.createRequest(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(newRequest);
@@ -34,7 +35,7 @@ public class RequestController {
     }
 
     @PostMapping("/approve")
-    public ResponseEntity<?> approveRequest(@RequestBody UpdateRequestParams request) {
+    public ResponseEntity<?> approveRequest(@Valid @RequestBody UpdateRequestParams request) {
         try {
             Boolean result = requestService.approveRequest(request);
             return ResponseEntity.ok(result);
@@ -44,7 +45,7 @@ public class RequestController {
     }
 
     @PostMapping("/reject")
-    public ResponseEntity<?> rejectRequest(@RequestBody UpdateRequestParams request) {
+    public ResponseEntity<?> rejectRequest(@Valid @RequestBody UpdateRequestParams request) {
         try {
             Boolean result = requestService.rejectRequest(request);
             return ResponseEntity.ok(result);
@@ -54,7 +55,7 @@ public class RequestController {
     }
 
     @PostMapping("/cancel")
-    public ResponseEntity<?> cancelRequest(@RequestBody UpdateRequestParams request) {
+    public ResponseEntity<?> cancelRequest(@Valid @RequestBody UpdateRequestParams request) {
         try {
             Boolean result = requestService.cancelRequest(request);
             return ResponseEntity.ok(result);

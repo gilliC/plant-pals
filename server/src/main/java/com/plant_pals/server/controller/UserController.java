@@ -12,6 +12,7 @@ import com.plant_pals.server.dto.AuthRequest;
 import com.plant_pals.server.entity.User;
 import com.plant_pals.server.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -23,7 +24,7 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> createUser(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody AuthRequest request) {
         try {
             User user = userService.createUser(request.getName(), request.getPassword());
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
         try {
             User user = userService.login(request.getName(), request.getPassword());
             return ResponseEntity.ok(user);

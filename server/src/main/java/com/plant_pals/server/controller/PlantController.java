@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.plant_pals.server.entity.Plant;
 import com.plant_pals.server.service.PlantService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -23,7 +24,7 @@ public class PlantController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Plant createPlant(@RequestBody Plant plant) {
+    public Plant createPlant(@Valid @RequestBody Plant plant) {
         return plantService.createPlant(plant);
     }
 

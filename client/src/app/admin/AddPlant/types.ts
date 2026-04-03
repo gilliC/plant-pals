@@ -4,8 +4,8 @@ export interface AddPlantFormValues {
     shortDescription: string;
     description: string;
     wateringDifficulty: string;
-    sunlightRequirement: string;
+    sunlight: string;
     difficulty: string;
-    similarPlant: string;
-    imageUrl: string;
+    similarTo: string;
+    photoUrl: string;
 }

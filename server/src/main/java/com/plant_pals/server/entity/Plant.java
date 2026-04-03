@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,30 +25,37 @@ public class Plant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @NotBlank
     @Column(nullable = false, length = 150)
     private String name;
 
+    @NotBlank
     @Column(name = "short_description", nullable = false)
     private String shortDescription;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @NotBlank
     @Column(name = "photo_url", length = 500)
     private String photoUrl;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "watering_difficulty", nullable = false)
     private WateringLevel wateringDifficulty;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Sunlight sunlight;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty;

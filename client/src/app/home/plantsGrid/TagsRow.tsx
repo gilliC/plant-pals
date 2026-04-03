@@ -3,15 +3,16 @@
 import { Plant } from "@/lib/type";
 
 const wateringLabels = {
-    EASY: "💧 Easy",
+    LOW: "💧 Low",
     MEDIUM: "💧 Medium",
-    HARD: "💧 Hard",
+    HIGH: "💧 High",
 } as const;
 
 const sunlightLabels = {
-    LOW: "☀️ Low",
-    MEDIUM: "☀️ Indirect",
-    HIGH: "☀️ Direct",
+    FULL: "☀️ Full Sun",
+    PARTIAL: "☀️ Partial",
+    INDIRECT: "☀️ Indirect",
+    SHADE: "☀️ Shade",
 } as const;
 
 function PlantTag({ children }: { children: React.ReactNode }) {
@@ -26,8 +27,8 @@ export const TagsRow = ({ plant }: { plant: Plant }) => {
     return (
         <div className="flex flex-wrap gap-3">
             <PlantTag>{wateringLabels[plant.wateringDifficulty]}</PlantTag>
-            <PlantTag>{sunlightLabels[plant.sunlightRequirement]}</PlantTag>
-            <PlantTag>🌱 {plant.similarPlant}</PlantTag>
+            <PlantTag>{sunlightLabels[plant.sunlight]}</PlantTag>
+            {plant.similarTo && <PlantTag>🌱 {plant.similarTo}</PlantTag>}
         </div>
 
     );
