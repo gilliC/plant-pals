@@ -1,12 +1,10 @@
-import { WateringDifficulty, SunlightRequirement } from "../../../lib/type";
-
 export interface AddPlantFormValues {
     name: string;
     category: string;
     shortDescription: string;
     description: string;
-    wateringDifficulty: WateringDifficulty;
-    sunlightRequirement: SunlightRequirement;
+    wateringDifficulty: string;
+    sunlightRequirement: string;
     difficulty: string;
     similarPlant: string;
     imageUrl: string;

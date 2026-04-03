@@ -9,10 +9,22 @@ import { AddPlantFormValues } from "./types";
 const plantsPath = getApiPath("/plants");
 
 const addPlant = async (data: AddPlantFormValues) => {
+    const payload = {
+        name: data.name,
+        category: { name: data.category },
+        shortDescription: data.shortDescription,
+        description: data.description,
+        photoUrl: data.imageUrl,
+        wateringDifficulty: data.wateringDifficulty,
+        sunlight: data.sunlightRequirement,
+        difficulty: data.difficulty,
+        similarTo: data.similarPlant,
+    };
+
     const res = await fetch(plantsPath, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
     });
     if (!res.ok) {
         const text = await res.text();

@@ -58,7 +58,7 @@ export const WideCard = ({ plant, color = "purple" }: { plant: Plant; color?: Wi
                             className="rounded-full px-2.5 py-1.5 text-[9px] font-medium uppercase tracking-wider"
                             style={{ backgroundColor: theme.badgeBg, color: theme.badgeText }}
                         >
-                            {plant.category ?? ""}
+                            {plant.category?.name ?? ""}
                         </span>
                     </div>
 

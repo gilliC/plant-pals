@@ -10,10 +10,17 @@ export enum SunlightRequirement {
     HIGH = "HIGH",
 }
 
+export interface Category {
+    id: number;
+    name: string;
+    description?: string;
+    emoji?: string;
+}
+
 export interface Plant {
     id: number;
     name: string;
-    category: string;
+    category: Category;
     categories: string[];
     shortDescription: string;
     description: string;

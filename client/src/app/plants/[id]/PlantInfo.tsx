@@ -22,7 +22,7 @@ export const PlantInfo = ({ plant }: { plant: Plant }) => (
         <h1 className={classNames.name}>{plant.name}</h1>
 
         <div className={classNames.badgesRow}>
-            <span className={classNames.categoryBadge}>{plant.category}</span>
+            <span className={classNames.categoryBadge}>{plant.category?.name}</span>
             <span className={classNames.difficultyBadge}>
                 {difficultyLabels[plant.wateringDifficulty]}
             </span>

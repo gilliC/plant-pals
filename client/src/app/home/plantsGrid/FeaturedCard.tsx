@@ -16,7 +16,7 @@ export const FeaturedCard = ({ plant }: { plant: Plant }) => {
                 <CardContent className="relative flex h-full flex-col justify-between p-5">
                     <div className="flex items-start justify-between">
                         <span className="rounded-full bg-[#2c3a2e] px-3 py-1 text-[9px] font-medium uppercase tracking-wider text-[#86b991]">
-                            {plant.category}
+                            {plant.category?.name}
                         </span>
                         <span className="text-base">🔔</span>
                     </div>

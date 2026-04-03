@@ -23,7 +23,7 @@ export const SmallCard = ({ plant }: { plant: Plant }) => {
                 <CardContent className={classNames.CardContent}>
                     <div className={classNames.top}>
                         <span className={classNames.category}>
-                            {plant.category}
+                            {plant.category?.name}
                         </span>
                         <Image src={plant.imageUrl} alt={plant.name} className={classNames.image} width={240} height={240} />
                     </div>
