@@ -2,6 +2,7 @@
 import { useUser } from "../../lib/userContext";
 import { AddPlant } from "./AddPlant/AddPlant";
 import { DashboardCard } from "./DashboardCard";
+import { PlantsList } from "./PlantsList/PlantsList";
 
 const stats = [
     { title: "Plants listed", value: "47", variant: "listed" },
@@ -36,6 +37,7 @@ const Admin = () => {
                 ))}
                 <AddPlant />
             </div>
+            <PlantsList />
         </div>
     );
 };

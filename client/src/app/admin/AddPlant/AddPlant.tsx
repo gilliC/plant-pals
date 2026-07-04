@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useUser } from "../../../lib/userContext";
 import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
+import { Plant } from "@/lib/type";
 import { CareMetricsSelects } from "./CareMetricsSelects";
 import { useAddPlant } from "./useAddPlant";
 import { AddPlantFormValues } from "./types";
@@ -25,34 +26,72 @@ const classes = {
     divider: "mx-8 h-px bg-primary-darker",
     formContainer: "px-8 pt-4 pb-8 max-w-[600px]",
     label: "mb-2 text-sm text-muted",
-    input: "mb-4",
+    input: "mb-1",
+    fieldWrapper: "mb-4",
+    error: "text-sm text-destructive",
 };
 
-type FormField = { label: string; field: keyof AddPlantFormValues; placeholder: string };
+type FormField = {
+    label: string;
+    field: keyof AddPlantFormValues;
+    placeholder: string;
+    rules?: Parameters<ReturnType<typeof useAddPlant>["form"]["register"]>[1];
+};
 
 const fields: FormField[] = [
-    { label: "Plant Name", field: "name", placeholder: "e.g. Monstera Deliciosa" },
-    { label: "Main Category", field: "category", placeholder: "Houseplants / Herbs / Succulents..." },
-    { label: "Short Description", field: "shortDescription", placeholder: "A brief tagline for the listing" },
+    {
+        label: "Plant Name",
+        field: "name",
+        placeholder: "e.g. Monstera Deliciosa",
+        rules: { required: "Plant name is required", maxLength: { value: 150, message: "Max 150 characters" } },
+    },
+    {
+        label: "Main Category",
+        field: "category",
+        placeholder: "Houseplants / Herbs / Succulents...",
+        rules: { required: "Category is required" },
+    },
+    {
+        label: "Short Description",
+        field: "shortDescription",
+        placeholder: "A brief tagline for the listing",
+        rules: { required: "Short description is required" },
+    },
     { label: "Description", field: "description", placeholder: "A more detailed description of the plant" },
 ];
 
 const fieldsAfterCare: FormField[] = [
-    { label: "Similar Plant", field: "similarTo", placeholder: "e.g. Fiddle Leaf Fig, Snake Plant, etc." },
-    { label: "Image URL", field: "photoUrl", placeholder: "A URL to an image of the plant" },
+    {
+        label: "Similar Plant",
+        field: "similarTo",
+        placeholder: "e.g. Fiddle Leaf Fig, Snake Plant, etc.",
+        rules: { maxLength: { value: 150, message: "Max 150 characters" } },
+    },
+    {
+        label: "Image URL",
+        field: "photoUrl",
+        placeholder: "A URL to an image of the plant",
+        rules: { required: "Image URL is required", maxLength: { value: 500, message: "Max 500 characters" } },
+    },
 ];
 
-export const AddPlant = () => {
+interface AddPlantProps {
+    plant?: Plant;
+    triggerLabel?: string;
+    triggerClassName?: string;
+}
+
+export const AddPlant = ({ plant, triggerLabel, triggerClassName }: AddPlantProps) => {
     const { user, isAdmin } = useUser();
     const [open, setOpen] = useState(false);
-    const { form, onSubmit, isLoading } = useAddPlant(() => setOpen(false));
+    const { form, onSubmit, isLoading, isEdit } = useAddPlant(() => setOpen(false), plant);
 
     if (!user || !isAdmin) return null;
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger render={<button className={`px-4 py-2 cursor-pointer ${classes.button}`} />}>
-                + Add Plant
+            <DialogTrigger render={<button className={`px-4 py-2 cursor-pointer ${triggerClassName ?? classes.button}`} />}>
+                {triggerLabel ?? "+ Add Plant"}
             </DialogTrigger>
 
             <DialogContent
@@ -63,32 +102,50 @@ export const AddPlant = () => {
 
                 <DialogHeader className={classes.header}>
                     <DialogTitle className={classes.title}>
-                        Add new plant 🌱
+                        {isEdit ? "Edit plant 🌿" : "Add new plant 🌱"}
                     </DialogTitle>
                 </DialogHeader>
 
                 <div className={classes.divider} />
 
-                <form onSubmit={onSubmit} className={classes.formContainer}>
-                    {fields.map(({ label, field, placeholder }) => (
-                        <div key={field}>
+                <form onSubmit={onSubmit} className={classes.formContainer} noValidate>
+                    {fields.map(({ label, field, placeholder, rules }) => (
+                        <div key={field} className={classes.fieldWrapper}>
                             <Label className={classes.label}>{label}</Label>
-                            <Input placeholder={placeholder} className={classes.input} {...form.register(field)} />
+                            <Input
+                                placeholder={placeholder}
+                                className={classes.input}
+                                aria-invalid={!!form.formState.errors[field]}
+                                {...form.register(field, rules)}
+                            />
+                            {form.formState.errors[field] && (
+                                <p className={classes.error}>{form.formState.errors[field]?.message}</p>
+                            )}
                         </div>
                     ))}
 
                     <Label className={classes.label}>CARE METRICS</Label>
                     <CareMetricsSelects form={form} />
 
-                    {fieldsAfterCare.map(({ label, field, placeholder }) => (
-                        <div key={field}>
+                    {fieldsAfterCare.map(({ label, field, placeholder, rules }) => (
+                        <div key={field} className={classes.fieldWrapper}>
                             <Label className={classes.label}>{label}</Label>
-                            <Input placeholder={placeholder} className={classes.input} {...form.register(field)} />
+                            <Input
+                                placeholder={placeholder}
+                                className={classes.input}
+                                aria-invalid={!!form.formState.errors[field]}
+                                {...form.register(field, rules)}
+                            />
+                            {form.formState.errors[field] && (
+                                <p className={classes.error}>{form.formState.errors[field]?.message}</p>
+                            )}
                         </div>
                     ))}
 
                     <Button className={classes.button} type="submit" disabled={isLoading}>
-                        {isLoading ? "Adding..." : "Add Plant"}
+                        {isEdit
+                            ? isLoading ? "Saving..." : "Save Changes"
+                            : isLoading ? "Adding..." : "Add Plant"}
                     </Button>
                 </form>
             </DialogContent>

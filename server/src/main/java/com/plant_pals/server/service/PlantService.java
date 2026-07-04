@@ -37,4 +37,23 @@ public class PlantService {
     public Plant getPlantById(Long id) {
         return plantRepository.findById(id).orElseThrow(() -> new RuntimeException("Plant not found"));
     }
+
+    public Plant updatePlant(Long id, Plant plant) {
+        Plant existing = getPlantById(id);
+        Category category = categoryRepository.findByName(plant.getCategory().getName())
+                .orElseGet(() -> categoryRepository.save(plant.getCategory()));
+
+        existing.setCategory(category);
+        existing.setName(plant.getName());
+        existing.setShortDescription(plant.getShortDescription());
+        existing.setDescription(plant.getDescription());
+        existing.setPhotoUrl(plant.getPhotoUrl());
+        existing.setWateringDifficulty(plant.getWateringDifficulty());
+        existing.setSunlight(plant.getSunlight());
+        existing.setDifficulty(plant.getDifficulty());
+        existing.setSimilarTo(plant.getSimilarTo());
+        existing.setUpdatedAt(LocalDateTime.now());
+
+        return plantRepository.save(existing);
+    }
 }
