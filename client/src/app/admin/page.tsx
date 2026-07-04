@@ -1,20 +1,21 @@
 'use client';
 import { useUser } from "../../lib/userContext";
-import { AddPlant } from "./AddPlant/AddPlant";
 import { DashboardCard } from "./DashboardCard";
 import { PlantsList } from "./PlantsList/PlantsList";
+import { RecentRequests } from "./RecentRequests/RecentRequests";
 
 const stats = [
     { title: "Plants listed", value: "47", variant: "listed" },
     { title: "Adopted", value: "23", variant: "adopted" },
-    { title: "Pending Approvals", value: "5", variant: "pending" },
-    { title: "Total Users", value: "12", variant: "users" },
+    { title: "Pending review", value: "5", variant: "pending" },
+    { title: "Subscribers", value: "12", variant: "subscribers" },
 ]
 
 const classes = {
     h1: "text-4xl font-bold mb-4",
     h6: "text-primary-foreground",
-    grid: "grid grid-cols-1 lg:grid-cols-5 gap-4 mt-4 items-center",
+    grid: "grid grid-cols-1 md:grid-cols-4 gap-4 mt-4",
+    columns: "flex flex-col lg:flex-row gap-6 mt-8",
 }
 
 const Admin = () => {
@@ -35,9 +36,11 @@ const Admin = () => {
                 {stats.map((stat) => (
                     <DashboardCard key={stat.title} title={stat.title} value={stat.value} variant={stat.variant as any} />
                 ))}
-                <AddPlant />
             </div>
-            <PlantsList />
+            <div className={classes.columns}>
+                <RecentRequests />
+                <PlantsList />
+            </div>
         </div>
     );
 };

@@ -24,6 +24,11 @@ export interface Category {
     emoji?: string;
 }
 
+export enum PlantStatus {
+    AVAILABLE = "AVAILABLE",
+    ADOPTED = "ADOPTED",
+}
+
 export interface Plant {
     id: number;
     name: string;
@@ -36,6 +41,7 @@ export interface Plant {
     sunlight: Sunlight;
     difficulty: Difficulty;
     similarTo: string;
+    status: PlantStatus;
 }
 
 export enum RequestStatus {
@@ -48,6 +54,7 @@ export enum RequestStatus {
 export interface AdoptionRequest {
     id: number;
     plant: Plant;
+    user: { id: number; name: string };
     status: RequestStatus;
     createdAt: string;
     updatedAt: string;
