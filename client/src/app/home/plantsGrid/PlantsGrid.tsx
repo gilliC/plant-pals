@@ -55,19 +55,29 @@ function buildBlocks(plants: Plant[]): Block[] {
     return blocks;
 }
 
-export const PlantsGrid = () => {
+type PlantsGridProps = {
+    selectedCategory?: string;
+};
+
+export const PlantsGrid = ({ selectedCategory = "All" }: PlantsGridProps) => {
     const { plants, isLoading } = useGetPlants();
 
+    const filteredPlants = useMemo(() => {
+        if (!plants) return [];
+        if (selectedCategory === "All") return plants;
+        return plants.filter((plant) => plant.category?.name === selectedCategory);
+    }, [plants, selectedCategory]);
+
     const blocks = useMemo(() => {
-        if (!plants || plants.length === 0) return [];
-        return buildBlocks(plants);
-    }, [plants]);
+        if (!filteredPlants.length) return [];
+        return buildBlocks(filteredPlants);
+    }, [filteredPlants]);
 
     if (isLoading) {
         return <LoadingState />;
     }
 
-    if (!plants || plants.length === 0) {
+    if (!filteredPlants.length) {
         return <p className="mt-8 text-muted-foreground">No plants found.</p>;
     }
 

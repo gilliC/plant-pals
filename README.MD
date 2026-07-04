@@ -45,16 +45,13 @@ yarn dev
 ```
 Runs on http://localhost:3000
 
-## Admin access
-On first backend startup, an admin user is seeded automatically (no-op if an admin already exists). Sign in with:
-- name: `admin`
-- password: `admin123`
-
-Override via `APP_ADMIN_NAME` / `APP_ADMIN_PASSWORD` env vars — required for anything beyond local dev, since these are public defaults.
-
-## Seeding test data
-With the backend running, populate a handful of sample plants (skips any that already exist, safe to re-run):
+## Seeding dev data
+With the backend running, seed an admin user and a handful of sample plants (safe to re-run — skips whatever already exists):
 ```
 ./scripts/seed-dev-data.sh
 ```
-Requires `jq`.
+Requires `jq` and `psql`. Sign in with:
+- name: `admin`
+- password: `admin123`
+
+Override via `ADMIN_NAME` / `ADMIN_PASSWORD` env vars. There's no "register as admin" API by design (see TASKS.md §1) — the script registers a normal user via the public API, then promotes it to `ADMIN` with a direct DB write, which is why it needs `psql` access to the dev DB.

@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { PlantsGrid } from "./home/plantsGrid/PlantsGrid";
+import { Category } from "@/lib/type";
+import { getApiPath } from "@/lib/utils";
 
 const badgeUnselected =
   "rounded-2xl border-badge-border bg-badge text-badge-foreground";
@@ -12,10 +14,10 @@ const badgeSelected =
   "rounded-2xl border-badge-border bg-badge-active text-badge-active-foreground";
 
 export default function Home() {
-  const { data: categories, isLoading } = useQuery<string[]>({
+  const { data: categories, isLoading } = useQuery<Category[]>({
     queryKey: ["categories"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:8080/categories");
+      const res = await fetch(getApiPath("/categories"));
       return res.json();
     },
   });
@@ -35,21 +37,32 @@ export default function Home() {
             ))}
           </>
         )}
+        <Button
+          key="All"
+          variant={null}
+          size='lg'
+          className={
+            selectedCategory === "All" ? badgeSelected : badgeUnselected
+          }
+          onClick={() => setSelectedCategory("All")}
+        >
+          All
+        </Button>
         {categories?.map((category) => (
           <Button
-            key={category}
+            key={category.id}
             variant={null}
             size='lg'
             className={
-              category === selectedCategory ? badgeSelected : badgeUnselected
+              category.name === selectedCategory ? badgeSelected : badgeUnselected
             }
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => setSelectedCategory(category.name)}
           >
-            {category}
+            {category.name}
           </Button>
         ))}
       </div>
-      <PlantsGrid />
+      <PlantsGrid selectedCategory={selectedCategory} />
     </div>
   );
 }
