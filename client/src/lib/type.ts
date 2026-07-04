@@ -73,6 +73,12 @@ export const sunlightLabels = {
     SHADE: "Shade",
 } as const;
 
+export interface DashboardStats {
+    plantsListed: number;
+    adopted: number;
+    pendingReview: number;
+}
+
 export const wateringDifficultyLabels = {
     LOW: "Low",
     MEDIUM: "Moderate",

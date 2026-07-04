@@ -3,13 +3,9 @@ import { useUser } from "../../lib/userContext";
 import { DashboardCard } from "./DashboardCard";
 import { PlantsList } from "./PlantsList/PlantsList";
 import { RecentRequests } from "./RecentRequests/RecentRequests";
+import { useGetDashboardStats } from "./useGetDashboardStats";
 
-const stats = [
-    { title: "Plants listed", value: "47", variant: "listed" },
-    { title: "Adopted", value: "23", variant: "adopted" },
-    { title: "Pending review", value: "5", variant: "pending" },
-    { title: "Subscribers", value: "12", variant: "subscribers" },
-]
+const SUBSCRIBERS_COUNT = 12;
 
 const classes = {
     h1: "text-4xl font-bold mb-4",
@@ -20,6 +16,13 @@ const classes = {
 
 const Admin = () => {
     const { user, isAdmin } = useUser();
+    const { stats, isLoading } = useGetDashboardStats();
+    const statTiles = [
+        { title: "Plants listed", value: isLoading ? "..." : String(stats?.plantsListed ?? 0), variant: "listed" },
+        { title: "Adopted", value: isLoading ? "..." : String(stats?.adopted ?? 0), variant: "adopted" },
+        { title: "Pending review", value: isLoading ? "..." : String(stats?.pendingReview ?? 0), variant: "pending" },
+        { title: "Subscribers", value: String(SUBSCRIBERS_COUNT), variant: "subscribers" },
+    ];
     if (!user || !isAdmin) {
         return (
             <div className="p-6">
@@ -33,7 +36,7 @@ const Admin = () => {
             <h1 className={classes.h1}>Good morning, {user.name} 🌿</h1>
             <h6 className={classes.h6}>Here's a quick look at what's happening with your plants.</h6>
             <div className={classes.grid}>
-                {stats.map((stat) => (
+                {statTiles.map((stat) => (
                     <DashboardCard key={stat.title} title={stat.title} value={stat.value} variant={stat.variant as any} />
                 ))}
             </div>

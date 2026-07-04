@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.plant_pals.server.dto.CreateRequestParams;
 import com.plant_pals.server.dto.UpdateRequestParams;
 import com.plant_pals.server.entity.Plant;
+import com.plant_pals.server.entity.PlantStatus;
 import com.plant_pals.server.entity.Request;
 import com.plant_pals.server.entity.RequestStatus;
 import com.plant_pals.server.entity.Role;
@@ -71,6 +72,9 @@ public class RequestService {
             throw new RuntimeException("Only admins can approve requests");
         }
         Request request = updateRequestStatus(params.getRequestId(), RequestStatus.APPROVED);
+        Plant plant = request.getPlant();
+        plant.setStatus(PlantStatus.ADOPTED);
+        plantRepository.save(plant);
         return request.getStatus() == RequestStatus.APPROVED;
     }
 
