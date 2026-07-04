@@ -56,4 +56,9 @@ public class PlantService {
 
         return plantRepository.save(existing);
     }
+
+    public void deletePlant(Long id) {
+        getPlantById(id);
+        plantRepository.deleteById(id);
+    }
 }

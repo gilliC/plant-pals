@@ -1,12 +1,6 @@
 "use client";
 
-import { Plant } from "@/lib/type";
-
-const difficultyLabels = {
-    EASY: "Beginner",
-    MEDIUM: "Intermediate",
-    HARD: "Advanced",
-} as const;
+import { difficultyLabels, Plant } from "@/lib/type";
 
 const classNames = {
     name: "mt-8 text-[64px] font-bold leading-[70px] text-[#f2eee4]",
@@ -24,7 +18,7 @@ export const PlantInfo = ({ plant }: { plant: Plant }) => (
         <div className={classNames.badgesRow}>
             <span className={classNames.categoryBadge}>{plant.category?.name}</span>
             <span className={classNames.difficultyBadge}>
-                {difficultyLabels[plant.wateringDifficulty]}
+                {difficultyLabels[plant.difficulty]}
             </span>
         </div>
 
