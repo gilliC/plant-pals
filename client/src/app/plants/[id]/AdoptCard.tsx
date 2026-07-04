@@ -1,5 +1,7 @@
 "use client";
 
+import { useCreateRequest } from "@/hooks/useCreateRequest";
+
 const classNames = {
     card: "relative mt-3.5 overflow-hidden rounded-3xl border border-[#587860] bg-[#345a3e] p-6 shadow-[0px_8px_32px_-4px_rgba(0,0,0,0.3)]",
     circle: "absolute right-0 top-[-21px] h-[180px] w-[240px] rounded-full bg-[#4a7a54] opacity-30",
@@ -11,17 +13,27 @@ const classNames = {
     notifyLabel: "ml-2 text-[10px] text-[#a8dab0]",
 };
 
-export const AdoptCard = () => (
-    <div className={classNames.card}>
-        <div className={classNames.circle} />
-        <p className={classNames.title}>Ready to adopt? 🌱</p>
-        <p className={classNames.subtitle}>
-            Send a request and we'll be in touch!
-        </p>
-        <div className={classNames.buttonRow}>
-            <button className={classNames.adoptButton}>I want to adopt!</button>
-            <button className={classNames.notifyButton}>🔔</button>
-            <span className={classNames.notifyLabel}>Notify me</span>
+export const AdoptCard = ({ plantId }: { plantId: number }) => {
+    const { createRequest, isLoading } = useCreateRequest();
+
+    return (
+        <div className={classNames.card}>
+            <div className={classNames.circle} />
+            <p className={classNames.title}>Ready to adopt? 🌱</p>
+            <p className={classNames.subtitle}>
+                Send a request and we'll be in touch!
+            </p>
+            <div className={classNames.buttonRow}>
+                <button
+                    className={classNames.adoptButton}
+                    disabled={isLoading}
+                    onClick={() => createRequest(plantId)}
+                >
+                    I want to adopt!
+                </button>
+                <button className={classNames.notifyButton}>🔔</button>
+                <span className={classNames.notifyLabel}>Notify me</span>
+            </div>
         </div>
-    </div>
-);
+    );
+};

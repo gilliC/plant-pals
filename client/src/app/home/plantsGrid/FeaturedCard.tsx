@@ -3,12 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plant } from "@/lib/type";
+import { useCreateRequest } from "@/hooks/useCreateRequest";
 import Image from "next/image";
 import Link from "next/link";
 import { TagsRow } from "./TagsRow";
 
 
 export const FeaturedCard = ({ plant }: { plant: Plant }) => {
+    const { createRequest, isLoading } = useCreateRequest();
+
     return (
         <Link href={`/plants/${plant.id}`} className="h-full">
             <Card className="relative h-full min-h-[390px] min-w-[440px] shrink-0 rounded-3xl border-0 bg-card p-0 shadow-[0px_8px_28px_-4px_rgba(0,0,0,0.3)]">
@@ -41,7 +44,13 @@ export const FeaturedCard = ({ plant }: { plant: Plant }) => {
                         <TagsRow plant={plant} />
                         <Button
                             variant={null}
+                            disabled={isLoading}
                             className="h-[42px] w-[200px] rounded-full bg-[#345a3e] text-sm font-medium text-[#a8dab0] hover:bg-[#3d6a48]"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                createRequest(plant.id);
+                            }}
                         >
                             Adopt me 🌱
                         </Button>
