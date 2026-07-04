@@ -46,7 +46,7 @@ export const WideCard = ({ plant, color = "purple" }: { plant: Plant; color?: Wi
                     style={{ backgroundColor: theme.circleBg }}
                 />
                 <Image
-                    src={plant.imageUrl}
+                    src={plant.photoUrl}
                     alt={plant.name}
                     className="h-56 w-56 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full object-cover"
                     width={240}

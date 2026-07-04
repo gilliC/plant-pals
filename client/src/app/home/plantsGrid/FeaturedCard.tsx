@@ -23,7 +23,7 @@ export const FeaturedCard = ({ plant }: { plant: Plant }) => {
 
                     <div className="flex-1 flex items-center justify-center">
                         <Image
-                            src={plant.imageUrl}
+                            src={plant.photoUrl}
                             alt={plant.name}
                             className="h-56 w-56 rounded-full object-cover"
                             width={448}

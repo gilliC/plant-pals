@@ -18,7 +18,7 @@ export const PlantImageCard = ({ plant }: { plant: Plant }) => (
         <div className={classNames.circleLg} />
         <div className={classNames.circleSm} />
         <Image
-            src={plant.imageUrl}
+            src={plant.photoUrl}
             alt={plant.name}
             className={classNames.image}
             width={448}

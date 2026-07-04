@@ -25,7 +25,7 @@ export const SmallCard = ({ plant }: { plant: Plant }) => {
                         <span className={classNames.category}>
                             {plant.category?.name}
                         </span>
-                        <Image src={plant.imageUrl} alt={plant.name} className={classNames.image} width={240} height={240} />
+                        <Image src={plant.photoUrl} alt={plant.name} className={classNames.image} width={240} height={240} />
                     </div>
 
                     <div className="mt-auto space-y-1">
