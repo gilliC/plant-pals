@@ -14,6 +14,7 @@ import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
 import { Plant } from "@/lib/type";
 import { CareMetricsSelects } from "./CareMetricsSelects";
+import { CategoryCombobox } from "./CategoryCombobox";
 import { useAddPlant } from "./useAddPlant";
 import { AddPlantFormValues } from "./types";
 
@@ -44,12 +45,6 @@ const fields: FormField[] = [
         field: "name",
         placeholder: "e.g. Monstera Deliciosa",
         rules: { required: "Plant name is required", maxLength: { value: 150, message: "Max 150 characters" } },
-    },
-    {
-        label: "Main Category",
-        field: "category",
-        placeholder: "Houseplants / Herbs / Succulents...",
-        rules: { required: "Category is required" },
     },
     {
         label: "Short Description",
@@ -123,6 +118,11 @@ export const AddPlant = ({ plant, triggerLabel, triggerClassName }: AddPlantProp
                             )}
                         </div>
                     ))}
+
+                    <div className={classes.fieldWrapper}>
+                        <Label className={classes.label}>Main Category</Label>
+                        <CategoryCombobox form={form} />
+                    </div>
 
                     <Label className={classes.label}>CARE METRICS</Label>
                     <CareMetricsSelects form={form} />

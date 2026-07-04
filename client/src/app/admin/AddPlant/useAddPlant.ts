@@ -9,10 +9,11 @@ import { AddPlantFormValues } from "./types";
 
 const plantsPath = getApiPath("/plants");
 
-const REQUIRED_CARE_METRICS: {
-    field: "wateringDifficulty" | "sunlight" | "difficulty";
+const REQUIRED_SELECT_FIELDS: {
+    field: "category" | "wateringDifficulty" | "sunlight" | "difficulty";
     message: string;
 }[] = [
+    { field: "category", message: "Category is required" },
     { field: "wateringDifficulty", message: "Watering difficulty is required" },
     { field: "sunlight", message: "Sunlight is required" },
     { field: "difficulty", message: "Difficulty is required" },
@@ -78,7 +79,7 @@ export const useAddPlant = (onSuccess: () => void, plant?: Plant) => {
     });
 
     const onSubmit = form.handleSubmit((data) => {
-        const missing = REQUIRED_CARE_METRICS.filter(({ field }) => !data[field]);
+        const missing = REQUIRED_SELECT_FIELDS.filter(({ field }) => !data[field]);
         if (missing.length > 0) {
             missing.forEach(({ field, message }) => form.setError(field, { type: "required", message }));
             return;

@@ -1,12 +1,10 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { PlantsGrid } from "./home/plantsGrid/PlantsGrid";
-import { Category } from "@/lib/type";
-import { getApiPath } from "@/lib/utils";
+import { useGetCategories } from "@/hooks/useGetCategories";
 
 const badgeUnselected =
   "rounded-2xl border-badge-border bg-badge text-badge-foreground";
@@ -14,13 +12,7 @@ const badgeSelected =
   "rounded-2xl border-badge-border bg-badge-active text-badge-active-foreground";
 
 export default function Home() {
-  const { data: categories, isLoading } = useQuery<Category[]>({
-    queryKey: ["categories"],
-    queryFn: async () => {
-      const res = await fetch(getApiPath("/categories"));
-      return res.json();
-    },
-  });
+  const { categories, isLoading } = useGetCategories();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   return (
