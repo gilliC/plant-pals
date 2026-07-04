@@ -45,6 +45,14 @@ public class RequestService {
         return requestRepository.findAll();
     }
 
+    public Iterable<Request> getPendingRequests() {
+        return requestRepository.findByStatus(RequestStatus.PENDING);
+    }
+
+    public Iterable<Request> getRequestsByUserId(Long userId) {
+        return requestRepository.findByUserId(userId);
+    }
+
     public Request getRequestById(Long id) {
         return requestRepository.findById(id).orElseThrow(() -> new RuntimeException("Request not found"));
     }

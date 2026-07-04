@@ -1,13 +1,14 @@
 import { Card, CardContent } from "../../components/ui/card";
 
-const requests = {
-    total: 4,
-    approved: 1,
-    pending: 2,
-    rejected: 1,
+interface TotalCardsProps {
+    total: number;
+    approved: number;
+    pending: number;
+    rejected: number;
 }
 
-export const TotalCards = () => {
+export const TotalCards = ({ total, approved, pending, rejected }: TotalCardsProps) => {
+    const requests = { total, approved, pending, rejected };
     return (
         <div className="flex gap-4 mb-8">
             <Card className="center px-12 border-1 border-primary-darker">

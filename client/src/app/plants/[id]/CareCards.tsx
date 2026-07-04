@@ -23,13 +23,13 @@ const difficultyLabels = {
 
 const classNames = {
     grid: "grid grid-cols-2 gap-3.5",
-    card: "relative h-[160px] overflow-hidden rounded-[20px] border border-[#2c3a2e] bg-card p-3.5 shadow-[0px_6px_20px_-4px_rgba(0,0,0,0.15)]",
+    card: "relative h-[176px] overflow-hidden rounded-[20px] border border-[#2c3a2e] bg-card p-3.5 shadow-[0px_6px_20px_-4px_rgba(0,0,0,0.15)]",
     emoji: "text-[26px]",
     label: "mt-2 text-[9px] font-medium uppercase tracking-wider text-[#505c52]",
-    value: "mt-4 text-[16px] font-bold text-[#f2eee4]",
-    detail: "mt-1 text-[10px] text-[#505c52]",
+    value: "mt-3 text-[16px] font-bold text-[#f2eee4]",
+    detail: "mt-1 text-[10px] leading-[14px] text-[#505c52]",
     accent: "absolute bottom-0 left-0 h-[3px] w-full",
-    similarCard: "relative h-[160px] overflow-hidden rounded-[20px] border border-[#362e50] bg-[#1e1a32] p-3.5 shadow-[0px_6px_20px_-4px_rgba(0,0,0,0.15)]",
+    similarCard: "relative h-[176px] overflow-hidden rounded-[20px] border border-[#362e50] bg-[#1e1a32] p-3.5 shadow-[0px_6px_20px_-4px_rgba(0,0,0,0.15)]",
     similarLabel: "mt-2 text-[9px] font-medium uppercase tracking-wider text-[#b4a0dc]",
     similarDivider: "mt-2 h-px w-full bg-[#503c78]",
     similarText: "mt-2 text-[12px] leading-[18px] text-[#f2eee4]",

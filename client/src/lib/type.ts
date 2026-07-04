@@ -38,6 +38,21 @@ export interface Plant {
     similarTo: string;
 }
 
+export enum RequestStatus {
+    PENDING = "PENDING",
+    APPROVED = "APPROVED",
+    REJECTED = "REJECTED",
+    CANCELED = "CANCELED",
+}
+
+export interface AdoptionRequest {
+    id: number;
+    plant: Plant;
+    status: RequestStatus;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export const difficultyLabels = {
     BEGINNER: "Beginner",
     INTERMEDIATE: "Intermediate",

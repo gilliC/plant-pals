@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Card, CardContent } from "../../components/ui/card";
 import { Chip } from "../../components/ui/chip";
+import { AdoptionRequest } from "@/lib/type";
 
 const configs = {
     approved: {
@@ -20,32 +21,31 @@ const configs = {
         variant: 'warning',
         text: "Your request is being reviewed. We'll notify you soon.",
         status: 'Pending',
-    }
-}
+    },
+    canceled: {
+        cardBorder: "var(--error)",
+        variant: 'error',
+        text: "You canceled this request.",
+        status: 'Canceled',
+    },
+} as const;
 
-export const RequestItem = ({ request }: any) => {
-    const config = configs[request.status.toLowerCase() as any];
+export const RequestItem = ({ request }: { request: AdoptionRequest }) => {
+    const config = configs[request.status.toLowerCase() as keyof typeof configs];
     return (
         <Card key={request.id} className="mr-20 p-0">
             <CardContent className="flex border-l-3  p-4 gap-8 items-center" style={{ borderColor: config.cardBorder }}>
                 <div className="flex items-center flex-7 gap-4">
-                    <Image src={request.imageUrl} alt={request.plantName} width={100} height={100} className="rounded-lg object-cover w-20 h-20" />
+                    <Image src={request.plant.photoUrl} alt={request.plant.name} width={100} height={100} className="rounded-lg object-cover w-20 h-20" />
                     <div className="flex flex-col gap-0.5 ">
-                        <h1 className="font-semibold text-xl">{request.plantName}</h1>
-                        <p className="text-sm text-muted">{request.category.toLocaleUpperCase()}</p>
+                        <h1 className="font-semibold text-xl">{request.plant.name}</h1>
+                        <p className="text-sm text-muted">{request.plant.category.name.toLocaleUpperCase()}</p>
                         <p className="text-sm text-primary-foreground">{config.text}</p>
                     </div>
                 </div>
                 <div className="flex flex-col gap-1 items-start flex-1">
-                    <p className="text-sm text-muted">{request.updatedAt}</p>
+                    <p className="text-sm text-muted">{new Date(request.updatedAt).toLocaleDateString()}</p>
                     <Chip text={config.status} variant={config.variant} />
-                    {/* <Badge className="border-1 bg-primary-dark p-4  gap-2" style={{
-                        borderColor: config.badgeColor,
-                        color: config.badgeColor,
-                    }}>
-                        <div className="h-2 w-2 rounded-full" style={{ backgroundColor: config.badgeColor }} />
-                        {config.status}
-                    </Badge> */}
                 </div>
             </CardContent>
         </Card>

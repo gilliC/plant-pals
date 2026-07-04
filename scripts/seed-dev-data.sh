@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Seeds local dev data: creates (or promotes) an admin user, then adds a handful
-# of sample plants (skipping any whose name already exists) via the running API.
+# Seeds local dev data: creates (or promotes) an admin user, adds a handful of
+# sample plants (skipping any whose name already exists), creates a demo user,
+# and files a few adoption requests for that user in different statuses
+# (pending/approved/rejected) so the "My Requests" page has real data to show.
 #
 # Admin creation is deliberately NOT done by the backend itself: there is no
 # "register as admin" API (that would let anyone self-promote — see TASKS.md §1),
@@ -17,6 +19,8 @@
 #   API_BASE           default http://localhost:8080/api
 #   ADMIN_NAME          default admin
 #   ADMIN_PASSWORD      default admin123
+#   DEMO_NAME           default demo
+#   DEMO_PASSWORD       default demo123
 #   PGHOST/PGUSER/PGDATABASE/PGPASSWORD  default to the local dev DB (see below)
 
 set -euo pipefail
@@ -24,6 +28,8 @@ set -euo pipefail
 API="${API_BASE:-http://localhost:8080/api}"
 ADMIN_NAME="${ADMIN_NAME:-admin}"
 ADMIN_PASSWORD="${ADMIN_PASSWORD:-admin123}"
+DEMO_NAME="${DEMO_NAME:-demo}"
+DEMO_PASSWORD="${DEMO_PASSWORD:-demo123}"
 
 export PGHOST="${PGHOST:-localhost}"
 export PGUSER="${PGUSER:-plant_pals_user}"
@@ -55,33 +61,55 @@ if [ "$ready" != "true" ]; then
     exit 1
 fi
 
-echo
-echo "== Admin =="
-login_status=$(curl -s -o /dev/null -w '%{http_code}' -X POST "$API/auth/login" \
-    -H "Content-Type: application/json" \
-    -d "{\"name\":\"$ADMIN_NAME\",\"password\":\"$ADMIN_PASSWORD\"}")
+# Registers a user via the public API if they don't already exist, then logs in
+# and prints their id. Echoes progress to stderr so callers can capture just the id.
+register_or_login() {
+    local name="$1"
+    local password="$2"
 
-if [ "$login_status" = "200" ]; then
-    role=$(psql -tAc "SELECT role FROM app_user WHERE name = '$ADMIN_NAME';")
-    if [ "$role" = "ADMIN" ]; then
-        echo "Admin user '$ADMIN_NAME' already exists and is ADMIN."
-    else
-        psql -c "UPDATE app_user SET role = 'ADMIN' WHERE name = '$ADMIN_NAME';" >/dev/null
-        echo "Promoted existing user '$ADMIN_NAME' to ADMIN."
-    fi
-else
-    register_status=$(curl -s -o /dev/null -w '%{http_code}' -X POST "$API/auth/register" \
+    local login_response
+    login_response=$(curl -s -w '\n%{http_code}' -X POST "$API/auth/login" \
         -H "Content-Type: application/json" \
-        -d "{\"name\":\"$ADMIN_NAME\",\"password\":\"$ADMIN_PASSWORD\"}")
+        -d "{\"name\":\"$name\",\"password\":\"$password\"}")
+    local login_status="${login_response##*$'\n'}"
+    local login_body="${login_response%$'\n'*}"
+
+    if [ "$login_status" = "200" ]; then
+        echo "User '$name' already exists." >&2
+        jq -r '.id' <<<"$login_body"
+        return
+    fi
+
+    local register_response
+    register_response=$(curl -s -w '\n%{http_code}' -X POST "$API/auth/register" \
+        -H "Content-Type: application/json" \
+        -d "{\"name\":\"$name\",\"password\":\"$password\"}")
+    local register_status="${register_response##*$'\n'}"
+    local register_body="${register_response%$'\n'*}"
 
     if [ "$register_status" != "201" ]; then
-        echo "Failed to register '$ADMIN_NAME' (HTTP $register_status)" >&2
+        echo "Failed to register '$name' (HTTP $register_status)" >&2
         exit 1
     fi
 
+    echo "Created user '$name'." >&2
+    jq -r '.id' <<<"$register_body"
+}
+
+echo
+echo "== Admin =="
+admin_id=$(register_or_login "$ADMIN_NAME" "$ADMIN_PASSWORD")
+role=$(psql -tAc "SELECT role FROM app_user WHERE name = '$ADMIN_NAME';")
+if [ "$role" = "ADMIN" ]; then
+    echo "'$ADMIN_NAME' is already ADMIN."
+else
     psql -c "UPDATE app_user SET role = 'ADMIN' WHERE name = '$ADMIN_NAME';" >/dev/null
-    echo "Created admin user '$ADMIN_NAME'."
+    echo "Promoted '$ADMIN_NAME' to ADMIN."
 fi
+
+echo
+echo "== Demo user =="
+demo_id=$(register_or_login "$DEMO_NAME" "$DEMO_PASSWORD")
 
 echo
 echo "== Plants =="
@@ -166,6 +194,66 @@ seed_plant "Basil" '{
     "difficulty": "INTERMEDIATE",
     "similarTo": "Mint"
 }'
+
+echo
+echo "== Requests (demo user) =="
+plants_json=$(curl -s "$API/plants")
+demo_requests_json=$(curl -s "$API/request?userId=$demo_id")
+
+plant_id_for() {
+    jq -r --arg name "$1" 'map(select(.name == $name)) | .[0].id // empty' <<<"$plants_json"
+}
+
+seed_request() {
+    local plant_name="$1"
+    local target_status="$2"
+
+    local plant_id
+    plant_id=$(plant_id_for "$plant_name")
+    if [ -z "$plant_id" ]; then
+        echo "Skip request for '$plant_name' (plant not found)" >&2
+        return
+    fi
+
+    local existing_request_id
+    existing_request_id=$(jq -r --argjson plantId "$plant_id" \
+        'map(select(.plant.id == $plantId)) | .[0].id // empty' <<<"$demo_requests_json")
+
+    if [ -n "$existing_request_id" ]; then
+        echo "Skip request for '$plant_name' (already requested, id=$existing_request_id)"
+        return
+    fi
+
+    local create_response request_id
+    create_response=$(curl -s -X POST "$API/request/create" \
+        -H "Content-Type: application/json" \
+        -d "{\"plantId\":$plant_id,\"userId\":$demo_id}")
+    request_id=$(jq -r '.id // empty' <<<"$create_response")
+
+    if [ -z "$request_id" ]; then
+        echo "Failed to create request for '$plant_name': $create_response" >&2
+        return
+    fi
+
+    case "$target_status" in
+    approved)
+        curl -s -o /dev/null -X POST "$API/request/approve" \
+            -H "Content-Type: application/json" \
+            -d "{\"requestId\":$request_id,\"userId\":$admin_id}"
+        ;;
+    rejected)
+        curl -s -o /dev/null -X POST "$API/request/reject" \
+            -H "Content-Type: application/json" \
+            -d "{\"requestId\":$request_id,\"userId\":$admin_id}"
+        ;;
+    esac
+
+    echo "Created request for '$plant_name' (id=$request_id, status=$target_status)"
+}
+
+seed_request "Monstera Deliciosa" "approved"
+seed_request "Snake Plant" "pending"
+seed_request "Fiddle Leaf Fig" "rejected"
 
 echo
 echo "Done."
