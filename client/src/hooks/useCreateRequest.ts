@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { getApiPath } from "@/lib/utils";
+import { getApiPath, apiFetch } from "@/lib/utils";
 import { useUser } from "@/lib/userContext";
 
 const path = getApiPath("/request/create");
@@ -17,7 +17,7 @@ export const useCreateRequest = () => {
                 throw new Error("You must be logged in to adopt a plant");
             }
 
-            const res = await fetch(path, {
+            const res = await apiFetch(path, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ plantId, userId: user.id }),

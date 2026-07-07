@@ -18,6 +18,7 @@ interface UserContextValue {
 const UserContext = createContext<UserContextValue | null>(null);
 
 const STORAGE_KEY = "plant-pals-user";
+const TOKEN_KEY = "plant-pals-token";
 
 function loadUser(): User | null {
   if (typeof window === "undefined") return null;
@@ -26,6 +27,20 @@ function loadUser(): User | null {
     return stored ? JSON.parse(stored) : null;
   } catch {
     return null;
+  }
+}
+
+export function getToken(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function setToken(token: string | null) {
+  if (typeof window === "undefined") return;
+  if (token) {
+    localStorage.setItem(TOKEN_KEY, token);
+  } else {
+    localStorage.removeItem(TOKEN_KEY);
   }
 }
 
@@ -42,6 +57,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     } else {
       localStorage.removeItem(STORAGE_KEY);
+      setToken(null);
     }
   }, [user]);
 

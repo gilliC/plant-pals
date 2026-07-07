@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { getApiPath } from "@/lib/utils";
+import { getApiPath, apiFetch } from "@/lib/utils";
 import { useUser } from "@/lib/userContext";
 
 const path = getApiPath("/request/approve");
@@ -13,7 +13,7 @@ export const useApproveRequest = () => {
 
     const mutation = useMutation({
         mutationFn: async (requestId: number) => {
-            const res = await fetch(path, {
+            const res = await apiFetch(path, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ requestId, userId: user?.id }),

@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { getApiPath } from "../../lib/utils";
-import { useUser, type User } from "../../lib/userContext";
+import { useUser, setToken, type User } from "../../lib/userContext";
 
 interface AuthResponse {
   token: string;
@@ -50,6 +50,7 @@ export function useAuth(onSuccess: () => void) {
   const login = useMutation({
     mutationFn: loginUser,
     onSuccess: (data: AuthResponse) => {
+      setToken(data.token);
       setUser(data.user);
       onSuccess();
     },
@@ -60,8 +61,9 @@ export function useAuth(onSuccess: () => void) {
 
   const register = useMutation({
     mutationFn: registerUser,
-    onSuccess: (data: User) => {
-      setUser(data);
+    onSuccess: (data: AuthResponse) => {
+      setToken(data.token);
+      setUser(data.user);
       toast.success("Account created! You are now signed in.");
       onSuccess();
     },
