@@ -30,7 +30,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createUser(@Valid @RequestBody AuthRequest request) {
         try {
-            User user = userService.createUser(request.getName(), request.getPassword());
+            User user = userService.createUser(request.getName(), request.getPassword(), request.getEmail());
             return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponse(user));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

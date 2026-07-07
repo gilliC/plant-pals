@@ -15,13 +15,14 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User createUser(String name, String password) {
+    public User createUser(String name, String password, String email) {
         User isExists = userRepository.findByName(name).orElse(null);
         if (isExists != null) {
             throw new RuntimeException("Name is already taken");
         }
         User user = new User();
         user.setName(name);
+        user.setEmail(email != null ? email : "");
         user.setRole(Role.USER);
         String hashed = BCrypt.withDefaults().hashToString(12, password.toCharArray());
         user.setPasswordHash(hashed);

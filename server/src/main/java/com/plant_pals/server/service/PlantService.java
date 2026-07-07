@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.plant_pals.server.entity.Category;
 import com.plant_pals.server.entity.Plant;
 import com.plant_pals.server.entity.PlantStatus;
+import com.plant_pals.server.messaging.NotificationPublisher;
 import com.plant_pals.server.repository.CategoryRepository;
 import com.plant_pals.server.repository.PlantRepository;
 
@@ -18,6 +19,7 @@ public class PlantService {
 
     private final PlantRepository plantRepository;
     private final CategoryRepository categoryRepository;
+    private final NotificationPublisher notificationPublisher;
 
     public Plant createPlant(Plant plant) {
         Category category = categoryRepository.findByName(plant.getCategory().getName())
@@ -27,7 +29,9 @@ public class PlantService {
         LocalDateTime now = LocalDateTime.now();
         plant.setCreatedAt(now);
         plant.setUpdatedAt(now);
-        return plantRepository.save(plant);
+        Plant saved = plantRepository.save(plant);
+        notificationPublisher.plantAdded(saved);
+        return saved;
     }
 
     public Iterable<Plant> getPlants() {

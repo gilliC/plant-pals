@@ -31,6 +31,10 @@ public class User {
     private String passwordHash;
 
     @NotNull
+    @Column(nullable = false, unique = true, length = 300)
+    private String email;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
