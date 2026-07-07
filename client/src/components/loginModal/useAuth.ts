@@ -5,6 +5,11 @@ import { toast } from "sonner";
 import { getApiPath } from "../../lib/utils";
 import { useUser, type User } from "../../lib/userContext";
 
+interface AuthResponse {
+  token: string;
+  user: User;
+}
+
 interface AuthPayload {
   name: string;
   password: string;
@@ -44,9 +49,8 @@ export function useAuth(onSuccess: () => void) {
 
   const login = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data: User) => {
-      setUser(data);
-      toast.success("Signed in successfully!");
+    onSuccess: (data: AuthResponse) => {
+      setUser(data.user);
       onSuccess();
     },
     onError: (err: Error) => {

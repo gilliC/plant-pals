@@ -2,6 +2,7 @@ package com.plant_pals.server.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,6 +54,7 @@ public class RequestController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/approve")
     public ResponseEntity<?> approveRequest(@Valid @RequestBody UpdateRequestParams request) {
         try {
@@ -63,6 +65,7 @@ public class RequestController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/reject")
     public ResponseEntity<?> rejectRequest(@Valid @RequestBody UpdateRequestParams request) {
         try {

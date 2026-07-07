@@ -14,7 +14,7 @@ export const useGetMyRequests = () => {
             const res = await fetch(getApiPath(`/request?userId=${user!.id}`));
             return res.json();
         },
-        enabled: !!user,
+        enabled: !!user?.id,
     });
 
     return { requests: requests ?? [], isLoading };

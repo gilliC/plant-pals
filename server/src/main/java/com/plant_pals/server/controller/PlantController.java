@@ -1,6 +1,7 @@
 package com.plant_pals.server.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class PlantController {
 
     private final PlantService plantService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Plant createPlant(@Valid @RequestBody Plant plant) {
@@ -35,6 +37,7 @@ public class PlantController {
         return plantService.getPlantById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public Plant updatePlant(@PathVariable Long id, @Valid @RequestBody Plant plant) {
         return plantService.updatePlant(id, plant);
@@ -45,6 +48,7 @@ public class PlantController {
         return plantService.getPlants();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePlant(@PathVariable Long id) {
