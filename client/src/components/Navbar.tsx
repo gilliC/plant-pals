@@ -16,9 +16,11 @@ export function Navbar() {
         <Link href="/" className="px-4 py-2">
           <p className="text-primary">Browse</p>
         </Link>
-        <Link href="/myRequests" className="px-4 py-2">
-          <p className="text-primary">My Requests</p>
-        </Link>
+        {!isAdmin && (
+          <Link href="/myRequests" className="px-4 py-2">
+            <p className="text-primary">My Requests</p>
+          </Link>
+        )}
         {isAdmin && (
           <Link href="/admin" className="px-4 py-2">
             <p className="text-primary">Admin</p>

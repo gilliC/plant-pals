@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.plant_pals.server.dto.AuthRequest;
+import com.plant_pals.server.dto.AuthResponse;
 import com.plant_pals.server.entity.User;
+import com.plant_pals.server.security.JwtService;
 import com.plant_pals.server.service.UserService;
 
 import jakarta.validation.Valid;
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
     private final UserService userService;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,7 +40,8 @@ public class UserController {
     public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
         try {
             User user = userService.login(request.getName(), request.getPassword());
-            return ResponseEntity.ok(user);
+            String token = jwtService.generateToken(user);
+            return ResponseEntity.ok(new AuthResponse(token, user));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
