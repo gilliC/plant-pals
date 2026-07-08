@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -11,17 +11,16 @@ interface AuthFormProps {
   submitLabel: string;
 }
 
-export function AuthForm({ mutation, submitLabel }: AuthFormProps) {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+interface FormValues {
+  name: string;
+  password: string;
+}
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    mutation.mutate({ name, password });
-  }
+export function AuthForm({ mutation, submitLabel }: AuthFormProps) {
+  const { register, handleSubmit } = useForm<FormValues>();
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-5 pb-2">
+    <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-4 pt-5 pb-2">
       <div className="flex flex-col gap-1.5">
         <Label className="text-[9px] uppercase tracking-[0.54px] text-muted">
           Name
@@ -29,9 +28,7 @@ export function AuthForm({ mutation, submitLabel }: AuthFormProps) {
         <Input
           type="text"
           placeholder="Your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
+          {...register("name", { required: true })}
           className="h-[42px] rounded-[12px] border-primary-darker bg-background text-[13px] placeholder:text-muted"
         />
       </div>
@@ -43,9 +40,7 @@ export function AuthForm({ mutation, submitLabel }: AuthFormProps) {
         <Input
           type="password"
           placeholder="Your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
+          {...register("password", { required: true })}
           className="h-[42px] rounded-[12px] border-primary-darker bg-background text-[13px] placeholder:text-muted"
         />
       </div>

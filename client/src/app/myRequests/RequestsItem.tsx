@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Card, CardContent } from "../../components/ui/card";
 import { Chip } from "../../components/ui/chip";
 import { AdoptionRequest } from "@/lib/type";
+import { useCancelRequest } from "@/hooks/useCancelRequest";
+import { Button } from "../../components/ui/button";
 
 const configs = {
     approved: {
@@ -32,6 +34,9 @@ const configs = {
 
 export const RequestItem = ({ request }: { request: AdoptionRequest }) => {
     const config = configs[request.status.toLowerCase() as keyof typeof configs];
+    const { cancelRequest, isLoading } = useCancelRequest();
+    const isPending = request.status.toLowerCase() === "pending";
+
     return (
         <Card key={request.id} className="mr-20 p-0">
             <CardContent className="flex border-l-3  p-4 gap-8 items-center" style={{ borderColor: config.cardBorder }}>
@@ -46,6 +51,17 @@ export const RequestItem = ({ request }: { request: AdoptionRequest }) => {
                 <div className="flex flex-col gap-1 items-start flex-1">
                     <p className="text-sm text-muted">{new Date(request.updatedAt).toLocaleDateString()}</p>
                     <Chip text={config.status} variant={config.variant} />
+                    {isPending && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={isLoading}
+                            onClick={() => cancelRequest(request.id)}
+                            className="mt-1"
+                        >
+                            {isLoading ? "Canceling..." : "Cancel"}
+                        </Button>
+                    )}
                 </div>
             </CardContent>
         </Card>
