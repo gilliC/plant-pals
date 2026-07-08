@@ -2,6 +2,7 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../../components/ui/select";
+import { difficultyLabels, sunlightLabels, wateringLabels } from "@/lib/type";
 import { AddPlantFormValues } from "./types";
 
 const classes = {
@@ -10,24 +11,9 @@ const classes = {
     error: "text-sm text-destructive",
 };
 
-const wateringOptions = [
-    { value: "LOW", label: "Low" },
-    { value: "MEDIUM", label: "Moderate" },
-    { value: "HIGH", label: "Frequent" },
-];
-
-const sunlightOptions = [
-    { value: "FULL", label: "Full Sun" },
-    { value: "PARTIAL", label: "Partial Sun" },
-    { value: "INDIRECT", label: "Indirect Light" },
-    { value: "SHADE", label: "Shade" },
-];
-
-const difficultyOptions = [
-    { value: "BEGINNER", label: "Beginner" },
-    { value: "INTERMEDIATE", label: "Intermediate" },
-    { value: "ADVANCED", label: "Advanced" },
-];
+const wateringOptions = Object.entries(wateringLabels).map(([value, { label }]) => ({ value, label }));
+const sunlightOptions = Object.entries(sunlightLabels).map(([value, { label }]) => ({ value, label }));
+const difficultyOptions = Object.entries(difficultyLabels).map(([value, { label }]) => ({ value, label }));
 
 interface CareMetricsSelectsProps {
     form: UseFormReturn<AddPlantFormValues>;

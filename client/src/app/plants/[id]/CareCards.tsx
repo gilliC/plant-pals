@@ -1,25 +1,6 @@
 "use client";
 
-import { Plant } from "@/lib/type";
-
-const wateringLabels = {
-    LOW: { label: "Low", detail: "Water infrequently", level: 1 },
-    MEDIUM: { label: "Moderate", detail: "Every 5 days or so", level: 3 },
-    HIGH: { label: "Frequent", detail: "Needs regular watering", level: 5 },
-} as const;
-
-const sunlightLabels = {
-    FULL: { label: "Full sun", detail: "Needs direct sunlight", level: 4 },
-    PARTIAL: { label: "Partial sun", detail: "Some direct sunlight", level: 3 },
-    INDIRECT: { label: "Indirect", detail: "Avoid direct sunlight", level: 2 },
-    SHADE: { label: "Shade", detail: "Tolerates low light", level: 1 },
-} as const;
-
-const difficultyLabels = {
-    BEGINNER: { label: "Beginner", detail: "Very easy to grow", stars: 1 },
-    INTERMEDIATE: { label: "Intermediate", detail: "Some experience needed", stars: 2 },
-    ADVANCED: { label: "Advanced", detail: "Requires careful attention", stars: 3 },
-} as const;
+import { difficultyLabels, Plant, sunlightLabels, wateringLabels } from "@/lib/type";
 
 const classNames = {
     grid: "grid grid-cols-2 gap-3.5",

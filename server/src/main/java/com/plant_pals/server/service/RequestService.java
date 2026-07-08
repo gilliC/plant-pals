@@ -92,6 +92,10 @@ public class RequestService {
         return request.getStatus() == RequestStatus.REJECTED;
     }
 
+    public long getPendingCountByPlantId(Long plantId) {
+        return requestRepository.countByPlantIdAndStatus(plantId, RequestStatus.PENDING);
+    }
+
     public Boolean cancelRequest(UpdateRequestParams params) {
         Request request = requestRepository.findById(params.getRequestId())
                 .orElseThrow(() -> new RuntimeException("Request not found"));

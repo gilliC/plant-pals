@@ -1,19 +1,6 @@
 "use client";
 
-import { Plant } from "@/lib/type";
-
-const wateringLabels = {
-    LOW: "💧 Low",
-    MEDIUM: "💧 Medium",
-    HIGH: "💧 High",
-} as const;
-
-const sunlightLabels = {
-    FULL: "☀️ Full Sun",
-    PARTIAL: "☀️ Partial",
-    INDIRECT: "☀️ Indirect",
-    SHADE: "☀️ Shade",
-} as const;
+import { Plant, sunlightLabels, wateringLabels } from "@/lib/type";
 
 function PlantTag({ children }: { children: React.ReactNode }) {
     return (
@@ -26,8 +13,8 @@ function PlantTag({ children }: { children: React.ReactNode }) {
 export const TagsRow = ({ plant }: { plant: Plant }) => {
     return (
         <div className="flex flex-wrap gap-3">
-            <PlantTag>{wateringLabels[plant.wateringDifficulty]}</PlantTag>
-            <PlantTag>{sunlightLabels[plant.sunlight]}</PlantTag>
+            <PlantTag>💧 {wateringLabels[plant.wateringDifficulty].label}</PlantTag>
+            <PlantTag>☀️ {sunlightLabels[plant.sunlight].label}</PlantTag>
             {plant.similarTo && <PlantTag>🌱 {plant.similarTo}</PlantTag>}
         </div>
 

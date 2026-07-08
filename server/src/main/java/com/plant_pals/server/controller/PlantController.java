@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.plant_pals.server.entity.Plant;
 import com.plant_pals.server.service.PlantService;
+import com.plant_pals.server.service.RequestService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class PlantController {
 
     private final PlantService plantService;
+    private final RequestService requestService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
@@ -41,6 +43,11 @@ public class PlantController {
     @PutMapping("/{id}")
     public Plant updatePlant(@PathVariable Long id, @Valid @RequestBody Plant plant) {
         return plantService.updatePlant(id, plant);
+    }
+
+    @GetMapping("/{id}/pending-count")
+    public long getPendingCount(@PathVariable Long id) {
+        return requestService.getPendingCountByPlantId(id);
     }
 
     @GetMapping
