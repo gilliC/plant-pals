@@ -17,57 +17,39 @@ A plant adoption platform — browse available plants, request to adopt one, and
 
 - Java 21
 - Node.js + yarn
-- PostgreSQL (`brew install postgresql@16`)
-- MailHog for local email testing (`brew install mailhog`)
+- **Mac:** Homebrew
+- **Windows:** [PostgreSQL 16](https://www.postgresql.org/download/windows/) installed and added to PATH
 
 ## Setup
 
-### Database
-Start Postgres and create the database/user (only needed once):
+**Mac** — run once on a fresh machine:
 ```bash
-brew services start postgresql@16
-createdb plant_pals
-psql -d plant_pals -c "CREATE ROLE plant_pals_user LOGIN PASSWORD 'password';"
-psql -d plant_pals -c "GRANT ALL PRIVILEGES ON DATABASE plant_pals TO plant_pals_user;"
-psql -d plant_pals -c "GRANT ALL ON SCHEMA public TO plant_pals_user;"
+yarn setup
 ```
-Credentials are configured in `server/src/main/resources/application.properties`.
+Installs PostgreSQL via Homebrew if needed, creates the database and user, and installs client dependencies.
 
-### Backend
+**Windows** — install PostgreSQL 16 manually first, then open Git Bash and run:
 ```bash
-cd server
-./gradlew bootRun
+yarn setup
 ```
-Runs on http://localhost:8080. Hibernate creates/updates all tables automatically on startup (`ddl-auto=update`).
 
-### Frontend
+Then in separate terminals:
 ```bash
-cd client
-yarn install
-yarn dev
+yarn server        # http://localhost:8080
+yarn client        # http://localhost:3000
 ```
-Runs on http://localhost:3000
+
+
+### Dev credentials
+- **admin** / `admin123` (ADMIN role)
+- **demo** / `demo123` (regular user, has sample requests)
 
 ### Email (dev)
-Start MailHog to catch outbound notification emails locally:
+To catch outbound notification emails locally, start MailHog (`brew install mailhog`) in a separate terminal:
 ```bash
 mailhog
 ```
-Inbox UI available at http://localhost:8025. No emails actually leave the machine.
-For production, update the `spring.mail.*` properties in `application.properties` with real SMTP credentials.
-
-## Seeding dev data
-With the backend running:
-```bash
-./scripts/seed-dev-data.sh
-```
-Requires `jq` and `psql`. Creates an admin user and sample plants. Safe to re-run — skips whatever already exists.
-
-Sign in with:
-- name: `admin`
-- password: `admin123`
-
-Admin accounts can't be registered via the API by design — the script registers a normal user then promotes it via a direct DB write, which is why it needs `psql`.
+Inbox UI: http://localhost:8025. For production, update `spring.mail.*` in `application.properties` with real SMTP credentials.
 
 ## Testing notifications
 
@@ -89,8 +71,42 @@ curl -X POST http://localhost:8080/api/subscriptions \
 
 Subscriptions are single-use and are deleted automatically after the email is sent.
 
+## Troubleshooting
+
+**`psql: command not found` after setup**
+PostgreSQL was installed but isn't on your PATH. Add it:
+```bash
+export PATH="$(brew --prefix postgresql@16)/bin:$PATH"
+```
+Add this line to your `~/.zshrc` to make it permanent.
+
+**Port 8080 or 3000 already in use**
+```bash
+lsof -ti:8080,3000 | xargs kill -9
+```
+
+**`yarn server` fails to connect to the database**
+Make sure PostgreSQL is running:
+```bash
+brew services start postgresql@16
+```
+If the database or user is missing, re-run `yarn setup`.
+
+**Backend starts but seed data is missing**
+`yarn server` runs with the seed profile and is idempotent — it skips data that already exists. If the DB was wiped, just restart `yarn server` and it will re-seed.
+
+**`yarn client` errors on startup**
+If `client/node_modules` is missing or corrupted:
+```bash
+cd client && yarn install
+```
+
+**Windows: `psql` not found after setup**
+Add PostgreSQL to your PATH permanently via System Properties → Environment Variables, adding `C:\Program Files\PostgreSQL\16\bin`.
+
 ## Out of scope
-- Mobile view
+kept some things out of scope to make the project light and easy to check.
+- Mobile view mode
 - Translation / i18n
 - Light mode
 - Direct image upload (URL-based only)
