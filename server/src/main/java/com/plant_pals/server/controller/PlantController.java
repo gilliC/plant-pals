@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.plant_pals.server.entity.Plant;
+import com.plant_pals.server.entity.PlantStatus;
 import com.plant_pals.server.service.PlantService;
 import com.plant_pals.server.service.RequestService;
 
@@ -51,8 +53,8 @@ public class PlantController {
     }
 
     @GetMapping
-    public Iterable<Plant> getPlants() {
-        return plantService.getPlants();
+    public Iterable<Plant> getPlants(@RequestParam(required = false) PlantStatus status) {
+        return status != null ? plantService.getPlantsByStatus(status) : plantService.getPlants();
     }
 
     @PreAuthorize("hasRole('ADMIN')")

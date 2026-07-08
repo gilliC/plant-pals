@@ -40,6 +40,7 @@ export const RequestItem = ({ request }: { request: AdoptionRequest }) => {
     const isPending = request.status.toLowerCase() === "pending";
     const isRejected = request.status.toLowerCase() === "rejected";
 
+
     return (
         <Card key={request.id} className="mr-20 p-0">
             <CardContent className="flex border-l-3  p-4 gap-8 items-center" style={{ borderColor: config.cardBorder }}>

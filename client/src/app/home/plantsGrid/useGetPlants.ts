@@ -4,11 +4,10 @@ import { Plant } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
 import { getApiPath } from "../../../lib/utils";
 
-const path = getApiPath("/plants");
-
-export const useGetPlants = () => {
+export const useGetPlants = ({ onlyAvailable = false } = {}) => {
+    const path = getApiPath(onlyAvailable ? "/plants?status=AVAILABLE" : "/plants");
     const { data: plants, isLoading } = useQuery<Plant[]>({
-        queryKey: ["plants"],
+        queryKey: ["plants", { onlyAvailable }],
         queryFn: async () => {
             const res = await fetch(path);
             return res.json();

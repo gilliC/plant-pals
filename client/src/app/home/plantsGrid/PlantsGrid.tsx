@@ -60,7 +60,7 @@ type PlantsGridProps = {
 };
 
 export const PlantsGrid = ({ selectedCategory = "All" }: PlantsGridProps) => {
-    const { plants, isLoading } = useGetPlants();
+    const { plants, isLoading } = useGetPlants({ onlyAvailable: true });
 
     const filteredPlants = useMemo(() => {
         if (!plants) return [];

@@ -38,6 +38,10 @@ public class PlantService {
         return plantRepository.findAll();
     }
 
+    public Iterable<Plant> getPlantsByStatus(PlantStatus status) {
+        return plantRepository.findByStatus(status);
+    }
+
     public Plant getPlantById(Long id) {
         return plantRepository.findById(id).orElseThrow(() -> new RuntimeException("Plant not found"));
     }
