@@ -33,6 +33,10 @@ public class RequestService {
         Plant plant = plantRepository.findById(params.getPlantId())
                 .orElseThrow(() -> new RuntimeException("Plant not found"));
 
+        if (requestRepository.existsByUserIdAndPlantIdAndStatus(params.getUserId(), params.getPlantId(), RequestStatus.PENDING)) {
+            throw new RuntimeException("A pending request already exists for this user and plant");
+        }
+
         LocalDateTime now = LocalDateTime.now();
         request.setStatus(RequestStatus.PENDING);
         request.setUser(user);

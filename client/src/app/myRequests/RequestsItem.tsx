@@ -3,6 +3,7 @@ import { Card, CardContent } from "../../components/ui/card";
 import { Chip } from "../../components/ui/chip";
 import { AdoptionRequest } from "@/lib/type";
 import { useCancelRequest } from "@/hooks/useCancelRequest";
+import { useSubscribe } from "@/hooks/useSubscribe";
 import { Button } from "../../components/ui/button";
 
 const configs = {
@@ -35,7 +36,9 @@ const configs = {
 export const RequestItem = ({ request }: { request: AdoptionRequest }) => {
     const config = configs[request.status.toLowerCase() as keyof typeof configs];
     const { cancelRequest, isLoading } = useCancelRequest();
+    const { subscribe, isLoading: isSubscribing, isSuccess: isSubscribed } = useSubscribe();
     const isPending = request.status.toLowerCase() === "pending";
+    const isRejected = request.status.toLowerCase() === "rejected";
 
     return (
         <Card key={request.id} className="mr-20 p-0">
@@ -60,6 +63,17 @@ export const RequestItem = ({ request }: { request: AdoptionRequest }) => {
                             className="mt-1"
                         >
                             {isLoading ? "Canceling..." : "Cancel"}
+                        </Button>
+                    )}
+                    {isRejected && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={isSubscribing || isSubscribed}
+                            onClick={() => subscribe(request.plant.name)}
+                            className="mt-1"
+                        >
+                            {isSubscribed ? "Subscribed!" : isSubscribing ? "Subscribing..." : "Notify me"}
                         </Button>
                     )}
                 </div>

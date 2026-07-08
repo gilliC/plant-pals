@@ -77,6 +77,7 @@ export interface DashboardStats {
     plantsListed: number;
     adopted: number;
     pendingReview: number;
+    subscribers: number;
 }
 
 export const wateringDifficultyLabels = {

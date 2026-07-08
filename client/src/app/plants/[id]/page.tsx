@@ -30,7 +30,7 @@ const PlantPage = ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
             <div className={classNames.rightCol}>
                 <CareCards plant={plant} />
-                <AdoptCard plantId={plant.id} />
+                <AdoptCard plantId={plant.id} plantName={plant.name} />
             </div>
         </div>
     );

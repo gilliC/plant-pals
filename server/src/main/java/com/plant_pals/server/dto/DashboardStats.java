@@ -10,4 +10,5 @@ public class DashboardStats {
     private long plantsListed;
     private long adopted;
     private long pendingReview;
+    private long subscribers;
 }

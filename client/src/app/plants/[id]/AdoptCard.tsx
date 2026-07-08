@@ -1,6 +1,7 @@
 "use client";
 
 import { useCreateRequest } from "@/hooks/useCreateRequest";
+import { useSubscribe } from "@/hooks/useSubscribe";
 
 const classNames = {
     card: "relative mt-3.5 overflow-hidden rounded-3xl border border-[#587860] bg-[#345a3e] p-6 shadow-[0px_8px_32px_-4px_rgba(0,0,0,0.3)]",
@@ -13,8 +14,9 @@ const classNames = {
     notifyLabel: "ml-2 text-[10px] text-[#a8dab0]",
 };
 
-export const AdoptCard = ({ plantId }: { plantId: number }) => {
+export const AdoptCard = ({ plantId, plantName }: { plantId: number; plantName: string }) => {
     const { createRequest, isLoading } = useCreateRequest();
+    const { subscribe, isLoading: isSubscribing, isSuccess: isSubscribed } = useSubscribe();
 
     return (
         <div className={classNames.card}>
@@ -31,8 +33,17 @@ export const AdoptCard = ({ plantId }: { plantId: number }) => {
                 >
                     I want to adopt!
                 </button>
-                <button className={classNames.notifyButton}>🔔</button>
-                <span className={classNames.notifyLabel}>Notify me</span>
+                <button
+                    className={classNames.notifyButton}
+                    disabled={isSubscribing || isSubscribed}
+                    onClick={() => subscribe(plantName)}
+                    title={isSubscribed ? "Subscribed!" : "Notify me when available"}
+                >
+                    {isSubscribed ? "✅" : "🔔"}
+                </button>
+                <span className={classNames.notifyLabel}>
+                    {isSubscribed ? "Subscribed!" : "Notify me"}
+                </span>
             </div>
         </div>
     );

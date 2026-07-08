@@ -27,11 +27,11 @@ public class UserController {
     private final JwtService jwtService;
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createUser(@Valid @RequestBody AuthRequest request) {
         try {
             User user = userService.createUser(request.getName(), request.getPassword(), request.getEmail());
-            return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponse(user));
+            String token = jwtService.generateToken(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(token, new UserResponse(user)));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

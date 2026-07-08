@@ -5,8 +5,6 @@ import { PlantsList } from "./PlantsList/PlantsList";
 import { RecentRequests } from "./RecentRequests/RecentRequests";
 import { useGetDashboardStats } from "./useGetDashboardStats";
 
-const SUBSCRIBERS_COUNT = 12;
-
 const classes = {
     h1: "text-4xl font-bold mb-4",
     h6: "text-primary-foreground",
@@ -21,7 +19,7 @@ const Admin = () => {
         { title: "Plants listed", value: isLoading ? "..." : String(stats?.plantsListed ?? 0), variant: "listed" },
         { title: "Adopted", value: isLoading ? "..." : String(stats?.adopted ?? 0), variant: "adopted" },
         { title: "Pending review", value: isLoading ? "..." : String(stats?.pendingReview ?? 0), variant: "pending" },
-        { title: "Subscribers", value: String(SUBSCRIBERS_COUNT), variant: "subscribers" },
+        { title: "Subscribers", value: isLoading ? "..." : String(stats?.subscribers ?? 0), variant: "subscribers" },
     ];
     if (!user || !isAdmin) {
         return (
