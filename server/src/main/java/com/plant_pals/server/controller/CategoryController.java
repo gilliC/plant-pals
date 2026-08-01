@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.plant_pals.server.entity.Category;
-import com.plant_pals.server.repository.CategoryRepository;
+import com.plant_pals.server.service.CategoryService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,10 +14,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CategoryController {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
     @GetMapping
     public Iterable<Category> getCategories() {
-        return categoryRepository.findAll();
+        return categoryService.getCategories();
     }
 }

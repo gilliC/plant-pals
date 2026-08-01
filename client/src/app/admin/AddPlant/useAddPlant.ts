@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { getApiPath } from "../../../lib/utils";
+import { apiFetch, getApiPath } from "../../../lib/utils";
 import { Plant } from "@/lib/type";
 import { AddPlantFormValues } from "./types";
 
@@ -44,7 +44,7 @@ const savePlant = async (data: AddPlantFormValues, plantId?: number) => {
         similarTo: data.similarTo,
     };
 
-    const res = await fetch(plantId ? `${plantsPath}/${plantId}` : plantsPath, {
+    const res = await apiFetch(plantId ? `${plantsPath}/${plantId}` : plantsPath, {
         method: plantId ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -1,6 +1,6 @@
 'use client';
 import { useUser } from "../../lib/userContext";
-import { DashboardCard } from "./DashboardCard";
+import { DashboardCard, Variants } from "./DashboardCard";
 import { PlantsList } from "./PlantsList/PlantsList";
 import { RecentRequests } from "./RecentRequests/RecentRequests";
 import { useGetDashboardStats } from "./useGetDashboardStats";
@@ -35,7 +35,7 @@ const Admin = () => {
             <h6 className={classes.h6}>Here's a quick look at what's happening with your plants.</h6>
             <div className={classes.grid}>
                 {statTiles.map((stat) => (
-                    <DashboardCard key={stat.title} title={stat.title} value={stat.value} variant={stat.variant as any} />
+                    <DashboardCard key={stat.title} title={stat.title} value={stat.value} variant={stat.variant as Variants} />
                 ))}
             </div>
             <div className={classes.columns}>

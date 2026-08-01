@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { difficultyLabels, Plant } from "@/lib/type";
-import { getApiPath } from "@/lib/utils";
+import { apiFetch, getApiPath } from "@/lib/utils";
 
 const classNames = {
     name: "mt-8 text-[64px] font-bold leading-[70px] text-[#f2eee4]",
@@ -17,7 +17,7 @@ const usePendingCount = (plantId: number) => {
     const { data } = useQuery<number>({
         queryKey: ["plant-pending-count", plantId],
         queryFn: async () => {
-            const res = await fetch(getApiPath(`/plants/${plantId}/pending-count`));
+            const res = await apiFetch(getApiPath(`/plants/${plantId}/pending-count`));
             return res.json();
         },
     });

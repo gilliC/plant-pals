@@ -49,6 +49,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = loadUser();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- restoring from localStorage must happen post-mount to avoid an SSR/client hydration mismatch
     if (stored) setUser(stored);
   }, []);
 

@@ -2,7 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { getApiPath } from "../../lib/utils";
+import { apiFetch, getApiPath } from "../../lib/utils";
 import { useUser, setToken, type User } from "../../lib/userContext";
 
 interface AuthResponse {
@@ -19,7 +19,7 @@ const loginPath = getApiPath("/auth/login");
 const registerPath = getApiPath("/auth/register");
 
 async function loginUser(data: AuthPayload) {
-  const res = await fetch(loginPath, {
+  const res = await apiFetch(loginPath, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -32,7 +32,7 @@ async function loginUser(data: AuthPayload) {
 }
 
 async function registerUser(data: AuthPayload) {
-  const res = await fetch(registerPath, {
+  const res = await apiFetch(registerPath, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

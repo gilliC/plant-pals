@@ -1,4 +1,4 @@
-type Variants = 'listed' | 'adopted' | 'pending' | 'subscribers';
+export type Variants = 'listed' | 'adopted' | 'pending' | 'subscribers';
 const variantsConfig = {
     listed: {
         emoji: '🌿',
