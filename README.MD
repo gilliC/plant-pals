@@ -45,20 +45,35 @@ yarn client        # http://localhost:3000
 - **demo** / `demo123` (regular user, has sample requests)
 
 ### Email (dev)
-To catch outbound notification emails locally, start MailHog (`brew install mailhog`) in a separate terminal:
+To catch outbound notification emails locally, start Mailpit (`brew install mailpit`) in a separate terminal:
 ```bash
-mailhog
+mailpit
 ```
 Inbox UI: http://localhost:8025. For production, update `spring.mail.*` in `application.properties` with real SMTP credentials.
 
 ## Testing notifications
 
-1. Start MailHog: `mailhog`
-2. Register a user with an email address:
+Notifications only fire when a **brand-new** plant is created with a matching name — editing/updating an existing plant does not trigger one.
+
+### Via the UI
+
+1. Start Mailpit: `mailpit`
+2. Log in as the seeded `demo` user (`demo` / `demo123`).
+3. Find an adopted (unavailable) plant. The browse grid only shows available plants, so an adopted one won't appear there — but the seed data already leaves **"Monstera Deliciosa"** adopted. To reach its detail page:
+   - Go to `/admin`, open your browser's dev tools → Network tab, and inspect the `GET /plants` response (or open the "Edit" dialog on the "Monstera Deliciosa" row) to find its `id`.
+   - Navigate to `http://localhost:3000/plants/<id>`.
+4. On that plant's page, click the 🔔 **Notify me** button under the "This plant was adopted 🌿" card. It should flip to ✅ **Subscribed!**.
+5. Log out and log back in as `admin` / `admin123`, go to `/admin`, click **+ Add**, and create a new plant with `name` set to **exactly** `Monstera Deliciosa` (matching is by plant name string).
+6. Open **http://localhost:8025** (Mailpit) — the notification email to `demo@dev.local` should be there.
+
+### Via curl
+
+1. Start Mailpit: `mailpit`
+2. Log in as the seeded `demo` user (already created by the seed profile, so no need to register one) and note the `id` in the response:
 ```bash
-curl -X POST http://localhost:8080/api/auth/register \
+curl -X POST http://localhost:8080/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"name": "testuser", "password": "password123", "email": "test@example.com"}'
+  -d '{"name": "demo", "password": "demo123"}'
 ```
 3. Subscribe that user to a plant name (use the `id` returned above):
 ```bash
@@ -110,3 +125,4 @@ kept some things out of scope to make the project light and easy to check.
 - Translation / i18n
 - Light mode
 - Direct image upload (URL-based only)
+- Real email sending
